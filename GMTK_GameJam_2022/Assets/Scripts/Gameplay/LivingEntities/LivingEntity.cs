@@ -17,6 +17,11 @@ public class LivingEntity : MonoBehaviour
         Attack(debugAttackTarget);
     }
 
+    protected virtual void TargetForAttack(LivingEntity target, bool cancelable)
+    {
+        //TODO: Add Stuff here where Player can select Dice and then call Attack(target);
+    }
+
     protected virtual void Attack(LivingEntity target)
     {
         if (RollDice() > target.RollDice())
