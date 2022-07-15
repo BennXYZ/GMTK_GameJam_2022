@@ -134,8 +134,8 @@ GameObject:
   - component: {fileID: 132761739}
   - component: {fileID: 132761738}
   - component: {fileID: 132761737}
-  - component: {fileID: 132761736}
   - component: {fileID: 132761735}
+  - component: {fileID: 132761740}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -157,20 +157,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &132761736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132761734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 976ea96982e1fc64aadb68df54baf71b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  diceType: 6
-  debugAttackTarget: {fileID: 863607039}
 --- !u!23 &132761737
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -236,6 +222,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &132761740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132761734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b87ba5d9f762eb4ca62bda5a9bdea6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceType: 6
+  debugAttackTarget: {fileID: 0}
 --- !u!1 &216620240
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 132761736}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LivingEntity, Assembly-CSharp
         m_MethodName: DebugAttack
         m_Mode: 1
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceType: 6
-  debugAttackTarget: {fileID: 132761736}
+  debugAttackTarget: {fileID: 0}
 --- !u!23 &863607040
 MeshRenderer:
   m_ObjectHideFlags: 0

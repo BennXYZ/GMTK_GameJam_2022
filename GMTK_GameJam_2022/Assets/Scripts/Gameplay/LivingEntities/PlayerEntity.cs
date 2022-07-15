@@ -20,6 +20,7 @@ public class PlayerEntity : LivingEntity
         if(RollDice() > target.RollDice())
         {
             target.TakeDamage();
+            collectedDice.Add(target.DiceType);
         }
     }
 
@@ -27,18 +28,13 @@ public class PlayerEntity : LivingEntity
     {
         int currentRoll = 0;
         selectedDice.Sort();
-        currentRoll += RollDice(diceType);
+        currentRoll += DiceSystem.RollDice(diceType);
         while(selectedDice.Count > 0)
         {
-            currentRoll += RollDice(collectedDice[selectedDice[selectedDice.Count - 1]]);
+            currentRoll += DiceSystem.RollDice(collectedDice[selectedDice[selectedDice.Count - 1]]);
             collectedDice.RemoveAt(selectedDice[selectedDice.Count - 1]);
         }
         selectedDice.Clear();
         return currentRoll;
-    }
-
-    int RollDice(Dice die)
-    {
-        return Random.Range(0, (int)die) + 1;
     }
 }

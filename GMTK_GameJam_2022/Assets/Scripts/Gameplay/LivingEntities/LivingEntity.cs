@@ -10,6 +10,8 @@ public class LivingEntity : MonoBehaviour
     [SerializeField]
     LivingEntity debugAttackTarget;
 
+    public Dice DiceType { get => diceType; }
+
     public void DebugAttack()
     {
         Attack(debugAttackTarget);
@@ -30,6 +32,6 @@ public class LivingEntity : MonoBehaviour
 
     public virtual int RollDice()
     {
-        return Random.Range(0, (int)diceType) + 1;
+        return DiceSystem.RollDice(diceType);
     }
 }
