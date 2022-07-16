@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
@@ -8,6 +9,20 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     float selectionDragTolerance;
+
+    UnityEvent<Vector2Int> onGridPointSelected;
+
+    public static InputManager Instance { get => GameManager.Instance.inputManager; }
+
+    public UnityEvent<Vector2Int> OnGridPointSelected
+    {
+        get;
+    }
+
+    private void Awake()
+    {
+        onGridPointSelected = new UnityEvent<Vector2Int>();
+    }
 
     private void Update()
     {
@@ -17,16 +32,17 @@ public class InputManager : MonoBehaviour
         }
         if(Input.GetMouseButtonUp(0))
         {
-            if((Input.mousePosition - mouseDragStart).magnitude < selectionDragTolerance)
+            if(GameManager.Instance.gameStateManager.CurrentGameState == GameStateManager.GameState.TileSelection
+                && (Input.mousePosition - mouseDragStart).magnitude < selectionDragTolerance)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
                 {
                     Vector2Int gridPoint = new Vector2Int(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.z));
                     Debug.Log($"Hit Gripoint: {gridPoint}");
+                    onGridPointSelected.Invoke(gridPoint);
                 }
             }
-
         }
     }
 }

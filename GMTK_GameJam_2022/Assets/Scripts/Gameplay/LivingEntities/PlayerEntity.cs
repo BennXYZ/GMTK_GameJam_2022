@@ -14,6 +14,8 @@ public class PlayerEntity : LivingEntity
     CollectedDice collectedDiceUiPrefab;
 
     GameUI gameUI;
+    int currentRoll;
+    public int CurrentRoll { get; }
 
     protected override void Awake()
     {
@@ -26,6 +28,7 @@ public class PlayerEntity : LivingEntity
     {
         base.Init(grid);
         gameUI = FindObjectOfType<GameUI>();
+        gameUI.Init(this);
     }
 
     protected override void Attack(LivingEntity target)
@@ -43,6 +46,23 @@ public class PlayerEntity : LivingEntity
             selectedDice.Add(dice);
         else if (value && collectedDice.Contains(dice) && selectedDice.Contains(dice))
             selectedDice.Remove(dice);
+    }
+
+    public void StartMovement()
+    {
+        RollAndKeep();
+        Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll);
+        InputManager.Instance.OnGridPointSelected.AddListener(MoveToGridPoint);
+    }
+
+    private void MoveToGridPoint(Vector2Int target)
+    {
+
+    }
+
+    public void RollAndKeep()
+    {
+        currentRoll = RollDice();
     }
 
     public void AddDice(List<Dice> diceToCollect)
