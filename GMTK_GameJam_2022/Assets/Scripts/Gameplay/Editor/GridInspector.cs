@@ -5,20 +5,20 @@ using UnityEngine;
 
 namespace GMTKJam2022.Gameplay.Editor
 {
-    [CustomEditor(typeof(Grid))]
+    [CustomEditor(typeof(CasinoGrid))]
     public class GridInspector : UnityEditor.Editor
     {
-        Grid grid = null;
+        CasinoGrid grid = null;
 
         List<Vector2Int> selectedTiles = new List<Vector2Int>();
         Vector2Int newSize;
         int floodFillDistance = 0;
 
-        Grid.TileType multiselectionTileType;
+        CasinoGrid.TileType multiselectionTileType;
 
         private void OnEnable()
         {
-            grid = target as Grid;
+            grid = target as CasinoGrid;
             newSize = grid.Size;
             ClearSelection();
         }
@@ -107,12 +107,12 @@ namespace GMTKJam2022.Gameplay.Editor
 
         private void DrawMultiSelectionInspector()
         {
-            HashSet<Grid.TileType> selectedTypes = new();
+            HashSet<CasinoGrid.TileType> selectedTypes = new();
 
             for (int i = 0; i < selectedTiles.Count; i++)
             {
                 Vector2Int coordinate = selectedTiles[i];
-                Grid.GridTile? gridTile = grid.GetTile(coordinate);
+                CasinoGrid.GridTile? gridTile = grid.GetTile(coordinate);
                 if (gridTile.HasValue)
                 {
                     selectedTypes.Add(gridTile.Value.Type);
@@ -127,7 +127,7 @@ namespace GMTKJam2022.Gameplay.Editor
             if (selectedTypes.Count > 1)
             {
                 EditorGUI.showMixedValue = true;
-                multiselectionTileType = (Grid.TileType)int.MaxValue;
+                multiselectionTileType = (CasinoGrid.TileType)int.MaxValue;
             }
             else
             {
@@ -135,7 +135,7 @@ namespace GMTKJam2022.Gameplay.Editor
                     multiselectionTileType = type;
             }
 
-            Grid.TileType tileType = (Grid.TileType)EditorGUILayout.EnumPopup(multiselectionTileType);
+            CasinoGrid.TileType tileType = (CasinoGrid.TileType)EditorGUILayout.EnumPopup(multiselectionTileType);
             if (tileType != multiselectionTileType)
             {
                 for (int i = 0; i < selectedTiles.Count; i++)
@@ -143,7 +143,7 @@ namespace GMTKJam2022.Gameplay.Editor
                     Undo.RecordObject(grid, "Tiles changed");
                     EditorUtility.SetDirty(grid);
                     Vector2Int coordinate = selectedTiles[i];
-                    Grid.GridTile gridTile = grid.GetTile(coordinate).Value;
+                    CasinoGrid.GridTile gridTile = grid.GetTile(coordinate).Value;
                     gridTile.Type = tileType;
                     grid.SetTile(coordinate, gridTile);
                 }
@@ -155,11 +155,11 @@ namespace GMTKJam2022.Gameplay.Editor
 
         private void DrawSingleSelectionInspector(Vector2Int coordinate)
         {
-            Grid.GridTile? gridTile = grid.GetTile(coordinate);
+            CasinoGrid.GridTile? gridTile = grid.GetTile(coordinate);
             if (gridTile.HasValue)
             {
-                Grid.GridTile tile = gridTile.Value;
-                Grid.TileType tileType = (Grid.TileType)EditorGUILayout.EnumPopup(tile.Type);
+                CasinoGrid.GridTile tile = gridTile.Value;
+                CasinoGrid.TileType tileType = (CasinoGrid.TileType)EditorGUILayout.EnumPopup(tile.Type);
                 if (tileType != tile.Type)
                 {
                     Undo.RecordObject(grid, "Tiles changed");

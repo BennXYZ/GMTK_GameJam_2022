@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GMTKJam2022.Gameplay
 {
-    public class Grid : MonoBehaviour
+    public class CasinoGrid : MonoBehaviour
     {
         public enum TileType
         {

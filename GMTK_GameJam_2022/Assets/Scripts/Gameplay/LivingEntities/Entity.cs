@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GMTKJam2022.Gameplay;
 
 public class Entity : MonoBehaviour
 {
-    protected Grid grid;
+    protected CasinoGrid grid;
 
-    public virtual void Init(Grid grid)
+    public virtual void Init(CasinoGrid grid)
     {
         this.grid = grid;
     }

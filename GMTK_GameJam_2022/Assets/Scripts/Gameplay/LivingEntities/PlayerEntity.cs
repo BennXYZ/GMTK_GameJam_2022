@@ -36,11 +36,11 @@ public class PlayerEntity : LivingEntity
                 targetPosition + Vector2Int.right + Vector2Int.up + Vector2Int.right,
             });
         if (Input.GetKeyDown(KeyCode.DownArrow))
-            Move(Directions.Down);
+            Move(Direction.Down);
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            Move(Directions.Right);
+            Move(Direction.Right);
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            Move(Directions.Left);
+            Move(Direction.Left);
     }
 
     public override int RollDice()

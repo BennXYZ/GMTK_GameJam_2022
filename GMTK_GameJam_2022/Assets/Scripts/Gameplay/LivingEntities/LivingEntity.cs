@@ -13,7 +13,6 @@ public class LivingEntity : Entity
 
     [SerializeField]
     LivingEntity debugAttackTarget;
-    GMTKJam2022.Gameplay.Grid grid;
 
     List<Vector2Int> currentPath = new List<Vector2Int>();
 
@@ -26,7 +25,10 @@ public class LivingEntity : Entity
 
     protected virtual void Awake()
     {
-        grid = GameObject.FindObjectOfType<GMTKJam2022.Gameplay.Grid>();
+    }
+
+    public void AlignToGrid()
+    {
         Vector2Int targetPosition = GetNearestGridPoint(transform.position);
         MoveToPoint(targetPosition, true);
     }
@@ -36,25 +38,11 @@ public class LivingEntity : Entity
         //TODO: Add Stuff here where Player can select Dice and then call Attack(target);
     }
 
-    public void Move(Directions direction)
+    public void Move(Direction direction)
     {
         Vector2Int targetPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x - 0.5f), 
             Mathf.RoundToInt(transform.position.z - 0.5f));
-        switch(direction)
-        {
-            case Directions.Right:
-                targetPosition += Vector2Int.right;
-                break;
-            case Directions.Up:
-                targetPosition += Vector2Int.up;
-                break;
-            case Directions.Down:
-                targetPosition += Vector2Int.down;
-                break;
-            case Directions.Left:
-                targetPosition += Vector2Int.left;
-                break;
-        }
+        targetPosition += direction.ToVector();
         if (targetPosition.x <= grid.Size.x && targetPosition.y <= grid.Size.y && targetPosition.x >= 0 && targetPosition.y >= 0)
             MoveToPoint(targetPosition);
     }
