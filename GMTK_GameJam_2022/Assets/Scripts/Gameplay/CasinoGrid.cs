@@ -21,7 +21,7 @@ namespace GMTKJam2022.Gameplay
         public List<LivingEntity> LivingEntities { get; } = new List<LivingEntity>();
 
         [field: SerializeField]
-        public Vector2Int Origin { get; private set; }
+        public Vector2Int Origin { get; set; }
 
         [field: SerializeField]
         [HideInInspector]
@@ -32,7 +32,7 @@ namespace GMTKJam2022.Gameplay
             distance = Math.Max(0, distance);
             Dictionary<Vector2Int, int> data = new();
 
-            FloodFill(data, location, 0, distance);
+            FloodFill(data, location, null, 0, distance);
 
             return data;
         }
@@ -55,10 +55,15 @@ namespace GMTKJam2022.Gameplay
             int maxDistance = Math.Max(Size.x, Size.y);
             for (int i = 0; i < maxDistance; i++)
             {
-                newCoordinate += direction.ToVector();
-                GridTile? tile = GetTile(newCoordinate);
-                if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
+                GridTile? myTile = GetTile(newCoordinate);
+                if (myTile.HasValue && (myTile.Value.BlockedDirection.Mirror() & direction.ToFlag()) == direction.ToFlag())
                     break;
+
+                GridTile? nextTile = GetTile(newCoordinate + direction.ToVector());
+                if (!nextTile.HasValue || nextTile.Value.Type == TileType.Blocked || (nextTile.Value.BlockedDirection & direction.ToFlag()) == direction.ToFlag())
+                    break;
+
+                newCoordinate += direction.ToVector();
             }
 
             return newCoordinate;
@@ -93,11 +98,17 @@ namespace GMTKJam2022.Gameplay
             }
         }
 
-        private void FloodFill(Dictionary<Vector2Int, int> closedList, Vector2Int location, int currentDistance, int maxDistance)
+        private void FloodFill(Dictionary<Vector2Int, int> closedList, Vector2Int location, Direction? direction, int currentDistance, int maxDistance)
         {
             GridTile? tile = GetTile(location);
             if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
                 return;
+
+            if (direction.HasValue)
+            {
+                if ((direction.Value.ToFlag() & tile.Value.BlockedDirection.Mirror()) == direction.Value.ToFlag())
+                    return;
+            }
 
             if (closedList.TryGetValue(location, out int distance))
             {
@@ -110,10 +121,14 @@ namespace GMTKJam2022.Gameplay
 
             if (currentDistance < maxDistance)
             {
-                FloodFill(closedList, location + Direction.Up.ToVector(), currentDistance + 1, maxDistance);
-                FloodFill(closedList, location + Direction.Left.ToVector(), currentDistance + 1, maxDistance);
-                FloodFill(closedList, location + Direction.Right.ToVector(), currentDistance + 1, maxDistance);
-                FloodFill(closedList, location + Direction.Down.ToVector(), currentDistance + 1, maxDistance);
+                if ((DirectionFlag.Up & tile.Value.BlockedDirection) == 0)
+                    FloodFill(closedList, location + Direction.Up.ToVector(), Direction.Up, currentDistance + 1, maxDistance);
+                if ((DirectionFlag.Left & tile.Value.BlockedDirection) == 0)
+                    FloodFill(closedList, location + Direction.Left.ToVector(), Direction.Left, currentDistance + 1, maxDistance);
+                if ((DirectionFlag.Right & tile.Value.BlockedDirection) == 0)
+                    FloodFill(closedList, location + Direction.Right.ToVector(), Direction.Right, currentDistance + 1, maxDistance);
+                if ((DirectionFlag.Down & tile.Value.BlockedDirection) == 0)
+                    FloodFill(closedList, location + Direction.Down.ToVector(), Direction.Down, currentDistance + 1, maxDistance);
             }
         }
 
@@ -122,7 +137,9 @@ namespace GMTKJam2022.Gameplay
             for (int y = 0; y < Size.y; y++)
                 for (int x = 0; x < Size.x; x++)
                 {
-                    switch (tiles[x + y * Size.x].Type)
+                    Vector3 location = new Vector3(Origin.x + x + 0.5f, 0, Origin.y + y + 0.5f);
+                    GridTile tile = tiles[x + y * Size.x];
+                    switch (tile.Type)
                     {
                         case TileType.Empty:
                             Gizmos.color = Color.black;
@@ -132,7 +149,17 @@ namespace GMTKJam2022.Gameplay
                             Gizmos.color = Color.red;
                             break;
                     }
-                    Gizmos.DrawWireSphere(new Vector3(Origin.x + x + 0.5f, 0, Origin.y + y + 0.5f), 0.1f);
+                    Gizmos.DrawWireSphere(location, 0.2f);
+
+                    Gizmos.color = Color.red;
+                    if ((tile.BlockedDirection & DirectionFlag.Down) == DirectionFlag.Down)
+                        Gizmos.DrawWireCube(location + Vector3.back * 0.45f, new Vector3(1, 1, 0.1f));
+                    if ((tile.BlockedDirection & DirectionFlag.Up) == DirectionFlag.Up)
+                        Gizmos.DrawWireCube(location + Vector3.forward * 0.45f, new Vector3(1, 1, 0.1f));
+                    if ((tile.BlockedDirection & DirectionFlag.Right) == DirectionFlag.Right)
+                        Gizmos.DrawWireCube(location + Vector3.right * 0.45f, new Vector3(0.1f, 1, 1));
+                    if ((tile.BlockedDirection & DirectionFlag.Left) == DirectionFlag.Left)
+                        Gizmos.DrawWireCube(location + Vector3.left * 0.45f, new Vector3(0.1f, 1, 1));
                 }
         }
 
