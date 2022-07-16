@@ -1,3 +1,4 @@
+using GMTKJam2022.Gameplay;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,15 +7,25 @@ using UnityEngine;
 public class PlayerEntity : LivingEntity
 {
 
-    List<Dice> collectedDice;
+    List<CollectedDice> collectedDice;
 
-    List<int> selectedDice;
+    List<CollectedDice> selectedDice;
+
+    CollectedDice collectedDiceUiPrefab;
+
+    GameUI gameUI;
 
     protected override void Awake()
     {
-        selectedDice = new List<int>();
-        collectedDice = new List<Dice>();
+        selectedDice = new List<CollectedDice>();
+        collectedDice = new List<CollectedDice>();
         base.Awake();
+    }
+
+    public override void Init(CasinoGrid grid)
+    {
+        base.Init(grid);
+        gameUI = FindObjectOfType<GameUI>();
     }
 
     protected override void Attack(LivingEntity target)
@@ -22,16 +33,25 @@ public class PlayerEntity : LivingEntity
         if(RollDice() > target.RollDice())
         {
             target.TakeDamage();
-            collectedDice.Add(target.DiceType);
+            AddDice(new List<Dice> { target.DiceType });
         }
+    }
+
+    public void SelectDice(CollectedDice dice, bool value)
+    {
+        if (value && collectedDice.Contains(dice) && !selectedDice.Contains(dice))
+            selectedDice.Add(dice);
+        else if (value && collectedDice.Contains(dice) && selectedDice.Contains(dice))
+            selectedDice.Remove(dice);
     }
 
     public void AddDice(List<Dice> diceToCollect)
     {
-        foreach(Dice dice in diceToCollect)
-        {
-            collectedDice.Add(dice);
-        }
+        if (gameUI)
+            foreach (Dice dice in diceToCollect)
+            {
+                collectedDice.Add(gameUI.AddDice(dice, this));
+            }
     }
 
     private void Update()
@@ -55,14 +75,20 @@ public class PlayerEntity : LivingEntity
     public override int RollDice()
     {
         int currentRoll = 0;
-        selectedDice.Sort();
         currentRoll += diceType.RollDice();
+        string debugText = currentRoll.ToString();
+        int prevRoll = 0;
         while(selectedDice.Count > 0)
         {
-            currentRoll += (collectedDice[selectedDice[selectedDice.Count - 1]]).RollDice();
-            collectedDice.RemoveAt(selectedDice[selectedDice.Count - 1]);
+            prevRoll = currentRoll;
+            CollectedDice selectedDie = selectedDice[0];
+            currentRoll += selectedDie.diceType.RollDice();
+            debugText += " + " + (currentRoll - prevRoll).ToString();
+            collectedDice.Remove(selectedDie);
+            selectedDice.Remove(selectedDie);
+            Destroy(selectedDie.gameObject);
         }
-        selectedDice.Clear();
+        Debug.Log($"PlayerRoll: {debugText} = {currentRoll}");
         return currentRoll;
     }
 }
