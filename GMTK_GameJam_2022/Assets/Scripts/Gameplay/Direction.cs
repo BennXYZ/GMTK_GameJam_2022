@@ -54,4 +54,19 @@ public static class DirectionSystem
             _ => (DirectionFlag)0,
         };
     }
+
+    public static DirectionFlag Mirror(this DirectionFlag direction)
+    {
+        DirectionFlag outDirection = 0;
+        if ((direction & DirectionFlag.Up) == DirectionFlag.Up)
+            outDirection |= DirectionFlag.Down;
+        if ((direction & DirectionFlag.Down) == DirectionFlag.Down)
+            outDirection |= DirectionFlag.Up;
+        if ((direction & DirectionFlag.Right) == DirectionFlag.Right)
+            outDirection |= DirectionFlag.Left;
+        if ((direction & DirectionFlag.Left) == DirectionFlag.Left)
+            outDirection |= DirectionFlag.Right;
+
+        return outDirection;
+    }
 }

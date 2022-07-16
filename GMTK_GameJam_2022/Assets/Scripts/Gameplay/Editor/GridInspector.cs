@@ -52,6 +52,14 @@ namespace GMTKJam2022.Gameplay.Editor
 
         public override void OnInspectorGUI()
         {
+            Vector2Int origin = EditorGUILayout.Vector2IntField("Origin", grid.Origin);
+            if (origin != grid.Origin)
+            {
+                Undo.RecordObject(grid, "Moved grid");
+                EditorUtility.SetDirty(grid);
+                grid.Origin = origin;
+            }
+
             newSize = EditorGUILayout.Vector2IntField("Size", newSize);
 
             if (grid.Size != newSize)
@@ -60,11 +68,32 @@ namespace GMTKJam2022.Gameplay.Editor
                 if (GUILayout.Button("Resize"))
                 {
                     ClearSelection();
+                    Undo.RecordObject(grid, "Resized grid");
+                    EditorUtility.SetDirty(grid);
                     grid.Resize(newSize);
                 }
 
                 if (GUILayout.Button("Reset"))
                     newSize = grid.Size;
+            }
+
+            using (var selectionScope = new GUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("Select all"))
+                {
+                    for (int y = 0; y < grid.Size.y; y++)
+                        for (int x = 0; x < grid.Size.x; x++)
+                        {
+                            EditorUtility.SetDirty(grid);
+                            selectedTiles.Add(new Vector2Int(x, y));
+                        }
+                }
+                GUI.enabled = selectedTiles.Count > 0;
+                if (GUILayout.Button("Deselect all"))
+                {
+                    ClearSelection();
+                }
+                GUI.enabled = true;
             }
 
             DrawSelectionInspector();
