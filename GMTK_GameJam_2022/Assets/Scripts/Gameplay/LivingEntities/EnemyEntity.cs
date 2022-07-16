@@ -20,17 +20,29 @@ public class EnemyEntity : LivingEntity
     [SerializeField]
     AiPath pathToFollow;
 
+    [SerializeField]
+    int pathStartNode;
+
     int nextPathTarget;
 
     AggroLevel currentAggrolevel = AggroLevel.Calm;
 
     int followPlayer = 0;
 
-    public void DoTurn()
+    Action turnFinishedAction;
+
+    public override void Init(CasinoGrid grid)
+    {
+        base.Init(grid);
+        nextPathTarget = pathStartNode % pathToFollow.Count;
+    }
+
+    public void DoTurn(Action onTurnFinished)
     {
         StartMovement(true);
         MoveToGridPoint(followPlayer > 0 ? GameStateManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
         followPlayer--;
+        turnFinishedAction = onTurnFinished;
     }
 
     public override void OnPathEndReached()
@@ -46,7 +58,8 @@ public class EnemyEntity : LivingEntity
         }
         else
         {
-            GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.ActionSelection;
+            turnFinishedAction.Invoke();
+            turnFinishedAction = null;
         }
     }
 

@@ -13,10 +13,16 @@ public class Entity : MonoBehaviour
     public virtual void Init(CasinoGrid grid)
     {
         Grid = grid;
+        GameStateManager.Instance.AssignEntity(this);
     }
 
     protected virtual void Awake()
     {
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.Instance.RemoveEntity(this);
     }
 
     public Vector2Int GetNearestGridPoint(Vector3 position)

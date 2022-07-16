@@ -12,18 +12,18 @@ public class GameManager : MonoBehaviour
     static bool startFromMainMenu = false;
     const string StartFromMainMenuPath = "Game/Start From Main Menu";
 
-    [MenuItem(StartFromMainMenuPath, priority = 1)]
-    private static void Setting()
-    {
-        startFromMainMenu = !startFromMainMenu;
-    }
+    //[MenuItem(StartFromMainMenuPath, priority = 1)]
+    //private static void Setting()
+    //{
+    //    startFromMainMenu = !startFromMainMenu;
+    //}
 
-    [MenuItem(StartFromMainMenuPath, true)]
-    private static bool SettingValidate()
-    {
-        Menu.SetChecked(StartFromMainMenuPath, startFromMainMenu);
-        return true;
-    }
+    //[MenuItem(StartFromMainMenuPath, true)]
+    //private static bool SettingValidate()
+    //{
+    //    Menu.SetChecked(StartFromMainMenuPath, startFromMainMenu);
+    //    return true;
+    //}
 
     public GameStateManager gameStateManager;
     public InputManager inputManager;

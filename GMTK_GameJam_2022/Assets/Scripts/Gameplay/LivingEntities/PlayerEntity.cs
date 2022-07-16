@@ -121,13 +121,11 @@ public class PlayerEntity : LivingEntity
 
     public void FinishMovement()
     {
-        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.EnemyTurn;
-        EnemyEntity enemy = FindObjectOfType<EnemyEntity>();
-        enemy.DoTurn();
         currentRoll = 0;
         moveableTiles.Clear();
         InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
         ClearSpawnedTargetObjects();
+        GameStateManager.Instance.DoEnemyTurns();
     }
 
     public void AddDice(List<Dice> diceToCollect)

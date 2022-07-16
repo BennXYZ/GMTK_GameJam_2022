@@ -17,7 +17,53 @@ public class GameStateManager : MonoBehaviour
 
     public PlayerEntity playerEntity;
     List<LivingEntity> livingEntities = new List<LivingEntity>();
+    List<EnemyEntity> enemies = new List<EnemyEntity>();
     List<Entity> entities = new List<Entity>();
+
+    public void AssignEntity(Entity entity)
+    {
+        if (entity is PlayerEntity)
+        {
+            playerEntity = entity as PlayerEntity;
+            return;
+        }
+        if (entity is EnemyEntity)
+        {
+            enemies.Add(entity as EnemyEntity);
+            return;
+        }
+        entities.Add(entity);
+    }
+
+    internal void RemoveEntity(Entity entity)
+    {
+        if (playerEntity == entity)
+            playerEntity = null;
+        if (entity is LivingEntity)
+            livingEntities.Remove(entity as LivingEntity);
+        if (entity is EnemyEntity)
+            enemies.Remove(entity as EnemyEntity);
+        entities.Remove(entity as LivingEntity);
+    }
+
+    public void DoEnemyTurns()
+    {
+        CurrentGameState = GameState.EnemyTurn;
+        if(enemies.Count > 0)
+        {
+            enemies[0].DoTurn(delegate { EnemyTurnFinished(1); });
+        }
+    }
+
+    void EnemyTurnFinished(int nextEnemyId)
+    {
+        if(nextEnemyId < enemies.Count)
+            enemies[nextEnemyId].DoTurn(delegate { EnemyTurnFinished(nextEnemyId + 1); });
+        else
+        {
+            CurrentGameState = GameState.ActionSelection;
+        }    
+    }
 
     int currentLevel = 0;
 
@@ -42,14 +88,7 @@ public class GameStateManager : MonoBehaviour
         SceneManager.LoadScene(string.Format("Level{0:00}", currentLevel));
     }
 
-    public void AssignEntity(Entity entity)
-    {
-        if(entity is PlayerEntity)
-        {
-            playerEntity = entity as PlayerEntity;
-            return;
-        }
-    }
+
 
     public static GameStateManager Instance { get => GameManager.Instance.gameStateManager; }
 
