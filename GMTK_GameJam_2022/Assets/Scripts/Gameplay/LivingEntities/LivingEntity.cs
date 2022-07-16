@@ -1,3 +1,4 @@
+using GMTKJam2022.Gameplay;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,8 +24,10 @@ public class LivingEntity : Entity
         Attack(debugAttackTarget);
     }
 
-    protected virtual void Awake()
+    public override void Init(CasinoGrid grid)
     {
+        base.Init(grid);
+        AlignToGrid();
     }
 
     public void AlignToGrid()
@@ -118,6 +121,6 @@ public class LivingEntity : Entity
 
     public virtual int RollDice()
     {
-        return DiceSystem.RollDice(diceType);
+        return diceType.RollDice();
     }
 }

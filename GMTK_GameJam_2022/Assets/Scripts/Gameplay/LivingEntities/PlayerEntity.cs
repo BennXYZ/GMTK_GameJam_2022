@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,14 @@ public class PlayerEntity : LivingEntity
         }
     }
 
+    public void AddDice(List<Dice> diceToCollect)
+    {
+        foreach(Dice dice in diceToCollect)
+        {
+            collectedDice.Add(dice);
+        }
+    }
+
     private void Update()
     {
         Vector2Int targetPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x - 0.5f),
@@ -47,10 +56,10 @@ public class PlayerEntity : LivingEntity
     {
         int currentRoll = 0;
         selectedDice.Sort();
-        currentRoll += DiceSystem.RollDice(diceType);
+        currentRoll += diceType.RollDice();
         while(selectedDice.Count > 0)
         {
-            currentRoll += DiceSystem.RollDice(collectedDice[selectedDice[selectedDice.Count - 1]]);
+            currentRoll += (collectedDice[selectedDice[selectedDice.Count - 1]]).RollDice();
             collectedDice.RemoveAt(selectedDice[selectedDice.Count - 1]);
         }
         selectedDice.Clear();
