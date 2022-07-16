@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -187,6 +187,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613561285317273677, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3336615537620736826, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
       propertyPath: m_Name
       value: Corner1x1
@@ -406,6 +410,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door1x1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9083899011655001548, guid: 62fe21fe476b23248bef5427464d2e54, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62fe21fe476b23248bef5427464d2e54, type: 3}
 --- !u!1001 &512977337
@@ -415,6 +423,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613561285317273677, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3336615537620736826, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
       propertyPath: m_Name
       value: Corner1x1 (4)
@@ -472,6 +484,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1049207031300777648, guid: fc80f76bb8fd1e2449717b6d8d5e43ce, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 7749954502051584222, guid: fc80f76bb8fd1e2449717b6d8d5e43ce, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -577,6 +593,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door1x1
       objectReference: {fileID: 0}
+    - target: {fileID: 9083899011655001548, guid: 62fe21fe476b23248bef5427464d2e54, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62fe21fe476b23248bef5427464d2e54, type: 3}
 --- !u!1 &652691266
@@ -1395,6 +1415,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613561285317273677, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3336615537620736826, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
       propertyPath: m_Name
       value: Corner1x1 (3)
@@ -1452,6 +1476,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613561285317273677, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3336615537620736826, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
       propertyPath: m_Name
       value: Corner1x1 (2)
@@ -1509,6 +1537,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1049207031300777648, guid: fc80f76bb8fd1e2449717b6d8d5e43ce, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 7749954502051584222, guid: fc80f76bb8fd1e2449717b6d8d5e43ce, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -1623,6 +1655,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1049207031300777648, guid: fc80f76bb8fd1e2449717b6d8d5e43ce, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 7749954502051584222, guid: fc80f76bb8fd1e2449717b6d8d5e43ce, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -1853,6 +1889,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613561285317273677, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3336615537620736826, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
       propertyPath: m_Name
       value: Corner1x1 (5)
@@ -1910,6 +1950,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613561285317273677, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3336615537620736826, guid: 04cb2add320d6d1458a86b8efb7af8fe, type: 3}
       propertyPath: m_Name
       value: Corner1x1 (1)
