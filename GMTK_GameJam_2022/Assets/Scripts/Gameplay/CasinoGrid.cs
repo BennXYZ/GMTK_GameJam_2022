@@ -29,6 +29,24 @@ namespace GMTKJam2022.Gameplay
         [HideInInspector]
         public Vector2Int Size { get; private set; }
 
+        public List<Entity> Entities { get; } = new List<Entity>();
+        public List<LivingEntity> LivingEntities { get; } = new List<LivingEntity>();
+
+        private void Start()
+        {
+            foreach (Transform child in transform)
+            {
+                Entity entity = child.GetComponent<Entity>();
+                if (entity != null)
+                {
+                    entity.Init(this);
+                    Entities.Add(entity);
+                    if (entity is LivingEntity livingEntity)
+                        LivingEntities.Add(livingEntity);
+                }
+            }
+        }
+
         public void Resize(Vector2Int newSize)
         {
             Dictionary<Vector2Int, GridTile> tempTiles = new();
