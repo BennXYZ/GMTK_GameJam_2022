@@ -25,6 +25,4 @@ public class EnemyEntity : LivingEntity
         }
         return diceRoll;
     }
-
-    Direction direction;
 }

@@ -8,6 +8,8 @@ public class LivingEntity : Entity
 {
     [SerializeField]
     protected Dice diceType = Dice.D6;
+    [SerializeField]
+    Direction direction;
 
     [SerializeField]
     float movementSpeed;
