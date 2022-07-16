@@ -6,21 +6,19 @@ namespace GMTKJam2022.Gameplay
 {
     public class CasinoGrid : MonoBehaviour
     {
+        [SerializeField]
+        [HideInInspector]
+        private GridTile[] tiles = new GridTile[0];
+
         public enum TileType
         {
             Empty,
             Blocked
         }
 
-        [Serializable]
-        public struct GridTile
-        {
-            public TileType Type;
-        }
+        public List<Entity> Entities { get; } = new List<Entity>();
 
-        [SerializeField]
-        [HideInInspector]
-        private GridTile[] tiles = new GridTile[0];
+        public List<LivingEntity> LivingEntities { get; } = new List<LivingEntity>();
 
         [field: SerializeField]
         public Vector2Int Origin { get; private set; }
@@ -29,22 +27,41 @@ namespace GMTKJam2022.Gameplay
         [HideInInspector]
         public Vector2Int Size { get; private set; }
 
-        public List<Entity> Entities { get; } = new List<Entity>();
-        public List<LivingEntity> LivingEntities { get; } = new List<LivingEntity>();
-
-        private void Start()
+        public Dictionary<Vector2Int, int> FloodFill(Vector2Int location, int distance)
         {
-            foreach (Transform child in transform)
+            distance = Math.Max(0, distance);
+            Dictionary<Vector2Int, int> data = new();
+
+            FloodFill(data, location, 0, distance);
+
+            return data;
+        }
+
+        public GridTile? GetTile(Vector2Int coordinate)
+        {
+            if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
             {
-                Entity entity = child.GetComponent<Entity>();
-                if (entity != null)
-                {
-                    entity.Init(this);
-                    Entities.Add(entity);
-                    if (entity is LivingEntity livingEntity)
-                        LivingEntities.Add(livingEntity);
-                }
+                return tiles[coordinate.x + coordinate.y * Size.x];
             }
+            return null;
+        }
+
+        public Vector2Int Raycast(Vector2Int location, Direction direction)
+        {
+            if (!GetTile(location).HasValue)
+                return location;
+
+            Vector2Int newCoordinate = location;
+            int maxDistance = Math.Max(Size.x, Size.y);
+            for (int i = 0; i < maxDistance; i++)
+            {
+                newCoordinate += direction.ToVector();
+                GridTile? tile = GetTile(newCoordinate);
+                if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
+                    break;
+            }
+
+            return newCoordinate;
         }
 
         public void Resize(Vector2Int newSize)
@@ -68,68 +85,12 @@ namespace GMTKJam2022.Gameplay
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            for (int y = 0; y < Size.y; y++)
-                for (int x = 0; x < Size.x; x++)
-                {
-                    switch (tiles[x + y * Size.x].Type)
-                    {
-                        case TileType.Empty:
-                            Gizmos.color = Color.black;
-                            break;
-
-                        case TileType.Blocked:
-                            Gizmos.color = Color.red;
-                            break;
-                    }
-                    Gizmos.DrawWireSphere(new Vector3(Origin.x + x + 0.5f, 0, Origin.y + y + 0.5f), 0.3f);
-                }
-        }
-
-        public GridTile? GetTile(Vector2Int coordinate)
-        {
-            if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
-            {
-                return tiles[coordinate.x + coordinate.y * Size.x];
-            }
-            return null;
-        }
-
         public void SetTile(Vector2Int coordinate, GridTile tile)
         {
             if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
             {
                 tiles[coordinate.x + coordinate.y * Size.x] = tile;
             }
-        }
-
-        public Vector2Int Raycast(Vector2Int location, Direction direction)
-        {
-            if (!GetTile(location).HasValue)
-                return location;
-
-            Vector2Int newCoordinate = location;
-            int maxDistance = Math.Max(Size.x, Size.y);
-            for (int i = 0; i < maxDistance; i++)
-            {
-                newCoordinate += direction.ToVector();
-                GridTile? tile = GetTile(newCoordinate);
-                if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
-                    break;
-            }
-
-            return newCoordinate;
-        }
-
-        public Dictionary<Vector2Int, int> FloodFill(Vector2Int location, int distance)
-        {
-            distance = Math.Max(0, distance);
-            Dictionary<Vector2Int, int> data = new();
-
-            FloodFill(data, location, 0, distance);
-
-            return data;
         }
 
         private void FloodFill(Dictionary<Vector2Int, int> closedList, Vector2Int location, int currentDistance, int maxDistance)
@@ -154,6 +115,47 @@ namespace GMTKJam2022.Gameplay
                 FloodFill(closedList, location + Direction.Right.ToVector(), currentDistance + 1, maxDistance);
                 FloodFill(closedList, location + Direction.Down.ToVector(), currentDistance + 1, maxDistance);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            for (int y = 0; y < Size.y; y++)
+                for (int x = 0; x < Size.x; x++)
+                {
+                    switch (tiles[x + y * Size.x].Type)
+                    {
+                        case TileType.Empty:
+                            Gizmos.color = Color.black;
+                            break;
+
+                        case TileType.Blocked:
+                            Gizmos.color = Color.red;
+                            break;
+                    }
+                    Gizmos.DrawWireSphere(new Vector3(Origin.x + x + 0.5f, 0, Origin.y + y + 0.5f), 0.1f);
+                }
+        }
+
+        private void Start()
+        {
+            foreach (Transform child in transform)
+            {
+                Entity entity = child.GetComponent<Entity>();
+                if (entity != null)
+                {
+                    entity.Init(this);
+                    Entities.Add(entity);
+                    if (entity is LivingEntity livingEntity)
+                        LivingEntities.Add(livingEntity);
+                }
+            }
+        }
+
+        [Serializable]
+        public struct GridTile
+        {
+            public TileType Type;
+            public DirectionFlag BlockedDirection;
         }
     }
 }
