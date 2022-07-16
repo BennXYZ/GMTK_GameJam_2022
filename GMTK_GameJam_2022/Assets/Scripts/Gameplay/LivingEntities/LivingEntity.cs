@@ -10,7 +10,7 @@ public class LivingEntity : Entity
     [SerializeField]
     protected Dice diceType = Dice.D6;
     [SerializeField]
-    Direction direction;
+    protected Direction direction;
 
     [SerializeField]
     float movementSpeed;
@@ -18,12 +18,17 @@ public class LivingEntity : Entity
     [SerializeField]
     LivingEntity debugAttackTarget;
 
-    List<Vector2Int> currentPath = new List<Vector2Int>();
+    protected List<Vector2Int> currentPath = new List<Vector2Int>();
 
     public Dice DiceType { get => diceType; }
 
     public int CurrentRoll { get; }
     protected int currentRoll;
+
+    public Vector2Int GridPosition
+    {
+        get => GetNearestGridPoint(transform.position);
+    }
 
     public void DebugAttack()
     {
@@ -121,7 +126,7 @@ public class LivingEntity : Entity
         }
     }
 
-    void MoveToPoint(Vector2Int targetPosition, bool instant = false, Action onPositionReached = null)
+    protected virtual void MoveToPoint(Vector2Int targetPosition, bool instant = false, Action onPositionReached = null)
     {
         if(!instant)
         {

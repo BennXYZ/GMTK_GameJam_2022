@@ -29,6 +29,7 @@ public class PlayerEntity : LivingEntity
         base.Init(grid);
         gameUI = FindObjectOfType<GameUI>();
         gameUI.Init(this);
+        GameManager.Instance.playerEntity = this;
     }
 
     protected override void Attack(LivingEntity target)

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject tilePrefab;
 
+    public PlayerEntity playerEntity;
     static GameManager instance;
     public static GameManager Instance { get => instance; }
 

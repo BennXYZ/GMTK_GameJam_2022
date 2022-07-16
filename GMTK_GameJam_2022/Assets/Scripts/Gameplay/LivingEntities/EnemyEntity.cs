@@ -1,4 +1,5 @@
 using GMTKJam2022.Gameplay;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,13 @@ public class EnemyEntity : LivingEntity
 
     AggroLevel currentAggrolevel = AggroLevel.Calm;
 
+    int followPlayer = 0;
+
     public void DoTurn()
     {
         StartMovement(true);
-        MoveToGridPoint(pathToFollow[nextPathTarget]);
+        MoveToGridPoint(followPlayer > 0 ? GameManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
+        followPlayer--;
     }
 
     public override void OnPathEndReached()
@@ -85,6 +89,82 @@ public class EnemyEntity : LivingEntity
         }
         path.Sort((a, b) => a.Value.Distance < b.Value.Distance ? -1 : 1);
         MoveDownPath(path.Select(p => p.Key).ToList());
+    }
+
+    protected override void MoveToPoint(Vector2Int targetPosition, bool instant = false, Action onPositionReached = null)
+    {
+        if (!instant)
+        {
+            Direction? targetDirection = (targetPosition - GetNearestGridPoint(transform.position)).ToDirection();
+            if (targetDirection.HasValue)
+                direction = targetDirection.Value;
+            else
+                Debug.LogError("No Target Direction Achieved");
+
+            if (CheckVisiblePlayer())
+            {
+                if (followPlayer <= 0)
+                {
+                    UnityEngine.Debug.Log("PLAYER DETECTED!");
+                    currentPath.Clear();
+                    currentRoll = 0;
+                    OnPathEndReached();
+                }
+                else
+                {
+                    if (targetPosition == GameManager.Instance.playerEntity.GridPosition)
+                    {
+                        currentPath.Clear();
+                        currentRoll = 0;
+                        OnPathEndReached();
+                        Attack(GameManager.Instance.playerEntity);
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.Log("PLAYER DETECTED... AGAIN!");
+                        base.MoveToPoint(targetPosition, instant, onPositionReached);
+                    }
+                }
+                followPlayer = 3;
+            }
+            else
+            {
+                    base.MoveToPoint(targetPosition, instant, onPositionReached);
+            }
+        }
+        else
+            base.MoveToPoint(targetPosition, instant, onPositionReached);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if(moveableTiles != null)
+        {
+            Vector2Int positionToCheck = GridPosition;
+            Gizmos.color = Color.cyan;
+            while (true)
+            {
+                positionToCheck += direction.ToVector();
+                if (!moveableTiles.Any(t => t.Key == positionToCheck))
+                {
+                    return;
+                }
+                Gizmos.DrawWireSphere(new Vector3(positionToCheck.x + 0.5f, 0.5f, positionToCheck.y + 0.5f), 0.2f);
+            }
+        }
+    }
+
+    private bool CheckVisiblePlayer()
+    {
+        Vector2Int positionToCheck = GridPosition;
+        while (true)
+        {
+            positionToCheck += direction.ToVector();
+            if (!moveableTiles.Any(t => t.Key == positionToCheck))
+                return false;
+            if (positionToCheck == GameManager.Instance.playerEntity.GridPosition)
+                return true;
+        }
     }
 
     public override int RollDice()
