@@ -85,7 +85,7 @@ namespace GMTKJam2022.Gameplay
 
             foreach (var tempTile in tempTiles)
             {
-                if (tempTile.Key.x <= Size.x && tempTile.Key.y <= Size.y)
+                if (tempTile.Key.x < Size.x && tempTile.Key.y < Size.y)
                     tiles[tempTile.Key.x + tempTile.Key.y * Size.x] = tempTile.Value;
             }
         }
