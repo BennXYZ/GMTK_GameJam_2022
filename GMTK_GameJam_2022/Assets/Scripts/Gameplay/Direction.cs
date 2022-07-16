@@ -43,6 +43,13 @@ public static class DirectionSystem
         };
     }
 
+    public static Vector2Int ToVector(this Direction? direction)
+    {
+        if (!direction.HasValue)
+            return Vector2Int.zero;
+            return direction.Value.ToVector();
+    }
+
     public static DirectionFlag ToFlag(this Direction direction)
     {
         return direction switch
@@ -53,6 +60,18 @@ public static class DirectionSystem
             Direction.Left => DirectionFlag.Left,
             _ => (DirectionFlag)0,
         };
+    }
+
+    public static Direction Mirror(this Direction direction)
+    {
+        return (Direction)((int)direction + 2 % 4);
+    }
+
+    public static Direction? Mirror(this Direction? direction)
+    {
+        if(direction.HasValue)
+            return (Direction)(((int)direction.Value + 2) % 4);
+        return null;
     }
 
     public static DirectionFlag Mirror(this DirectionFlag direction)

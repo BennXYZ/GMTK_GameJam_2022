@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GMTKJam2022.Gameplay
@@ -27,10 +28,10 @@ namespace GMTKJam2022.Gameplay
         [HideInInspector]
         public Vector2Int Size { get; private set; }
 
-        public Dictionary<Vector2Int, int> FloodFill(Vector2Int location, int distance)
+        public Dictionary<Vector2Int, GridPathInformation> FloodFill(Vector2Int location, int distance)
         {
             distance = Math.Max(0, distance);
-            Dictionary<Vector2Int, int> data = new();
+            Dictionary<Vector2Int, GridPathInformation> data = new();
 
             FloodFill(data, location, null, 0, distance);
 
@@ -98,7 +99,7 @@ namespace GMTKJam2022.Gameplay
             }
         }
 
-        private void FloodFill(Dictionary<Vector2Int, int> closedList, Vector2Int location, Direction? direction, int currentDistance, int maxDistance)
+        private void FloodFill(Dictionary<Vector2Int, GridPathInformation> closedList, Vector2Int location, Direction? direction, int currentDistance, int maxDistance)
         {
             GridTile? tile = GetTile(location);
             if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
@@ -110,15 +111,16 @@ namespace GMTKJam2022.Gameplay
                     return;
             }
 
-            if (closedList.TryGetValue(location, out int distance))
+            if (closedList.Any(p => p.Key == location))
             {
+                int distance = closedList.First(p => p.Key == location).Value.Distance;
                 if (distance > currentDistance)
-                    closedList[location] = currentDistance;
+                    closedList[location] = new GridPathInformation(currentDistance, direction.Mirror());
                 else
                     return;
             }
             else
-                closedList.TryAdd(location, currentDistance);
+                closedList.TryAdd(location, new GridPathInformation(currentDistance, direction.Mirror()));
 
             if (currentDistance < maxDistance)
             {
@@ -184,6 +186,18 @@ namespace GMTKJam2022.Gameplay
         {
             public TileType Type;
             public DirectionFlag BlockedDirection;
+        }
+
+        public struct GridPathInformation
+        {
+            public int Distance;
+            public Direction? PreviousPoint;
+
+            public GridPathInformation(int distance, Direction? previousPoint)
+            {
+                Distance = distance;
+                PreviousPoint = previousPoint;
+            }
         }
     }
 }

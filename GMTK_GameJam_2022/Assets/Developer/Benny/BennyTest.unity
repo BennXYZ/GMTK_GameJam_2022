@@ -622,7 +622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction: {fileID: 0}
   diceType: 6
-  movementSpeed: 1
+  movementSpeed: 3
   debugAttackTarget: {fileID: 0}
 --- !u!1 &308809479
 GameObject:
@@ -1247,7 +1247,27 @@ MonoBehaviour:
     BlockedDirection: 0
   - Type: 0
     BlockedDirection: 0
+  - Type: 1
+    BlockedDirection: 0
   - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 0
+  - Type: 0
+    BlockedDirection: 1
+  - Type: 1
     BlockedDirection: 0
   - Type: 0
     BlockedDirection: 0
@@ -1285,27 +1305,7 @@ MonoBehaviour:
     BlockedDirection: 0
   - Type: 0
     BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
-    BlockedDirection: 0
-  - Type: 0
+  - Type: 1
     BlockedDirection: 0
   - Type: 0
     BlockedDirection: 0
