@@ -15,6 +15,9 @@ public class PlayerEntity : LivingEntity
 
     GameUI gameUI;
     int currentRoll;
+    Dictionary<Vector2Int, int> moveableTiles;
+    List<GameObject> spawnedTargetObjects = new List<GameObject>();
+
     public int CurrentRoll { get; }
 
     protected override void Awake()
@@ -51,8 +54,29 @@ public class PlayerEntity : LivingEntity
     public void StartMovement()
     {
         RollAndKeep();
-        Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll);
+        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll);
+        SpawnTargetObjects();
         InputManager.Instance.OnGridPointSelected.AddListener(MoveToGridPoint);
+    }
+
+    void ClearSpawnedTargetObjects()
+    {
+        foreach(GameObject tile in spawnedTargetObjects)
+        {
+            Destroy(tile);
+        }
+        spawnedTargetObjects.Clear();
+    }
+
+    private void SpawnTargetObjects()
+    {
+        ClearSpawnedTargetObjects();
+        foreach (var tile in moveableTiles)
+        {
+            GameObject newTile = Instantiate(GameManager.Instance.tilePrefab, 
+                new Vector3(tile.Key.x + 0.5f, 0.1f, tile.Key.y + 0.5f), Quaternion.identity);
+            spawnedTargetObjects.Add(newTile);
+        }
     }
 
     private void MoveToGridPoint(Vector2Int target)

@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     public GameStateManager gameStateManager;
     public InputManager inputManager;
 
+    [Space(15)]
+
+    public GameObject tilePrefab;
+
     static GameManager instance;
     public static GameManager Instance { get => instance; }
 

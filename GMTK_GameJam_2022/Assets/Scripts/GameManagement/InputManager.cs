@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
     public UnityEvent<Vector2Int> OnGridPointSelected
     {
-        get;
+        get => onGridPointSelected;
     }
 
     private void Awake()

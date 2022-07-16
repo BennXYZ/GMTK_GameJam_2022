@@ -73,7 +73,7 @@ public class GameUI : MonoBehaviour
 
     public void Move()
     {
-        player.RollAndKeep();
+        player.StartMovement();
         GameManager.Instance.gameStateManager.CurrentGameState = GameStateManager.GameState.TileSelection;
     }
 }

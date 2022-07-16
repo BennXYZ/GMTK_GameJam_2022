@@ -39,7 +39,7 @@ namespace GMTKJam2022.Gameplay
 
         public GridTile? GetTile(Vector2Int coordinate)
         {
-            if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
+            if (coordinate.x >= 0 && Size.x > coordinate.x && coordinate.y >= 0 && Size.y > coordinate.y)
             {
                 return tiles[coordinate.x + coordinate.y * Size.x];
             }
@@ -87,7 +87,7 @@ namespace GMTKJam2022.Gameplay
 
         public void SetTile(Vector2Int coordinate, GridTile tile)
         {
-            if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
+            if (coordinate.x >= 0 && Size.x > coordinate.x && coordinate.y >= 0 && Size.y > coordinate.y)
             {
                 tiles[coordinate.x + coordinate.y * Size.x] = tile;
             }

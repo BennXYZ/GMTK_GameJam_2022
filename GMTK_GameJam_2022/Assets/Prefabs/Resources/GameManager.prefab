@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8219af11d3b9d458f3bcae2810166c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStateManager: {fileID: 0}
+  inputManager: {fileID: 0}
+  tilePrefab: {fileID: 7731003737169530329, guid: fba0bb07383560f4b886f746d34ab14d, type: 3}
 --- !u!114 &2172016278545042525
 MonoBehaviour:
   m_ObjectHideFlags: 0
