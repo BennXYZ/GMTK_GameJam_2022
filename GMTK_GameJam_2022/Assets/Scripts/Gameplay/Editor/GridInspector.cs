@@ -16,6 +16,7 @@ namespace GMTKJam2022.Gameplay.Editor
 
         CasinoGrid.TileType multiselectionTileType;
         DirectionFlag multiselectionBlocker;
+        int multiselectionHeightOffset;
 
         private void OnEnable()
         {
@@ -31,15 +32,18 @@ namespace GMTKJam2022.Gameplay.Editor
             {
                 for (int x = 0; x < grid.Size.x; x++)
                 {
-                    bool isSelected = selectedTiles.Contains(new Vector2Int(x, y));
+                    Vector2Int coordinate = new Vector2Int(x, y);
+                    bool isSelected = selectedTiles.Contains(coordinate);
                     Handles.color = isSelected ? Color.blue : Color.white;
 
-                    if (Handles.Button(new Vector3(grid.Origin.x + x + 0.5f, 0, grid.Origin.y + y + 0.5f), Quaternion.identity, 0.3f, 0.3f, Handles.SphereHandleCap))
+                    CasinoGrid.GridTile? tile = grid.GetTile(coordinate);
+
+                    if (Handles.Button(new Vector3(grid.Origin.x + x + 0.5f, tile.Value.HeightOffset * 0.5f, grid.Origin.y + y + 0.5f), Quaternion.identity, 0.3f, 0.3f, Handles.SphereHandleCap))
                     {
                         if (isSelected)
-                            selectedTiles.Remove(new Vector2Int(x, y));
+                            selectedTiles.Remove(coordinate);
                         else
-                            selectedTiles.Add(new Vector2Int(x, y));
+                            selectedTiles.Add(coordinate);
 
                         selectionChanged = true;
                     }
@@ -141,6 +145,7 @@ namespace GMTKJam2022.Gameplay.Editor
         {
             HashSet<CasinoGrid.TileType> selectedTypes = new();
             HashSet<DirectionFlag> selectedBlockers = new();
+            HashSet<int> selectedHeightOffsets = new();
 
             for (int i = 0; i < selectedTiles.Count; i++)
             {
@@ -150,6 +155,7 @@ namespace GMTKJam2022.Gameplay.Editor
                 {
                     selectedTypes.Add(gridTile.Value.Type);
                     selectedBlockers.Add(gridTile.Value.BlockedDirection);
+                    selectedHeightOffsets.Add(gridTile.Value.HeightOffset);
                 }
                 else
                 {
@@ -217,6 +223,36 @@ namespace GMTKJam2022.Gameplay.Editor
 
                 EditorGUI.showMixedValue = false;
             }
+
+            { // Height offset
+                if (selectedHeightOffsets.Count > 1)
+                {
+                    EditorGUI.showMixedValue = true;
+                    multiselectionHeightOffset = int.MaxValue;
+                }
+                else
+                {
+                    foreach (var selectedHeightOffset in selectedHeightOffsets)
+                        multiselectionHeightOffset = selectedHeightOffset;
+                }
+
+                int heightOffset = EditorGUILayout.IntSlider("Height Offset", multiselectionHeightOffset, -1, 1);
+                if (heightOffset != multiselectionHeightOffset)
+                {
+                    for (int i = 0; i < selectedTiles.Count; i++)
+                    {
+                        Undo.RecordObject(grid, "Tiles changed");
+                        EditorUtility.SetDirty(grid);
+                        Vector2Int coordinate = selectedTiles[i];
+                        CasinoGrid.GridTile gridTile = grid.GetTile(coordinate).Value;
+                        gridTile.HeightOffset = heightOffset;
+                        grid.SetTile(coordinate, gridTile);
+                    }
+                    multiselectionHeightOffset = heightOffset;
+                }
+
+                EditorGUI.showMixedValue = false;
+            }
         }
 
         private void DrawSingleSelectionInspector(Vector2Int coordinate)
@@ -240,6 +276,15 @@ namespace GMTKJam2022.Gameplay.Editor
                     Undo.RecordObject(grid, "Tiles changed");
                     EditorUtility.SetDirty(grid);
                     tile.BlockedDirection = blockedDirection;
+                    grid.SetTile(coordinate, tile);
+                }
+
+                int heightOffset = EditorGUILayout.IntSlider("Height Offset", tile.HeightOffset, -1, 1);
+                if (heightOffset != tile.HeightOffset)
+                {
+                    Undo.RecordObject(grid, "Tiles changed");
+                    EditorUtility.SetDirty(grid);
+                    tile.HeightOffset = heightOffset;
                     grid.SetTile(coordinate, tile);
                 }
             }

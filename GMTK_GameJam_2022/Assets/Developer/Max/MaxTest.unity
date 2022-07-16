@@ -1705,88 +1705,130 @@ MonoBehaviour:
   tiles:
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: -1
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: -1
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: -1
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: -1
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 0
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   - Type: 1
     BlockedDirection: 0
+    HeightOffset: 0
   <Origin>k__BackingField: {x: 0, y: 0}
   <Size>k__BackingField: {x: 7, y: 6}
 --- !u!4 &1668279009
