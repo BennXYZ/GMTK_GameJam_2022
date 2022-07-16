@@ -85,5 +85,23 @@ namespace GMTKJam2022.Gameplay
                 tiles[coordinate.x + coordinate.y * Size.x] = tile;
             }
         }
+
+        public Vector2Int Raycast(Vector2Int location, Direction direction)
+        {
+            if (!GetTile(location).HasValue)
+                return location;
+
+            Vector2Int newCoordinate = location;
+            int maxDistance = Math.Max(Size.x, Size.y);
+            for (int i = 0; i < maxDistance; i++)
+            {
+                newCoordinate += direction.ToVector();
+                GridTile? tile = GetTile(newCoordinate);
+                if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
+                    break;
+            }
+
+            return newCoordinate;
+        }
     }
 }
