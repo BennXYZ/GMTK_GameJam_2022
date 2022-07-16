@@ -123,7 +123,15 @@ public class LivingEntity : Entity
 
     void MoveToPoint(Vector2Int targetPosition, bool instant = false, Action onPositionReached = null)
     {
-        //AddSomeMovement
+        if(!instant)
+        {
+            Direction? targetDirection = (targetPosition - GetNearestGridPoint(transform.position)).ToDirection();
+            if (targetDirection.HasValue)
+                direction = targetDirection.Value;
+            else
+                Debug.LogError("No Target Direction Achieved");
+        }
+
         if (instant)
         {
             transform.position = new Vector3(targetPosition.x + 0.5f, 0, targetPosition.y + 0.5f);

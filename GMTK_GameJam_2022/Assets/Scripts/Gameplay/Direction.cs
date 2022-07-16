@@ -88,4 +88,17 @@ public static class DirectionSystem
 
         return outDirection;
     }
+
+    public static Direction? ToDirection(this Vector2Int vector)
+    {
+        if (vector.x == 1)
+            return Direction.Right;
+        if (vector.x == -1)
+            return Direction.Left;
+        if (vector.y == 1)
+            return Direction.Up;
+        if (vector.y == -1)
+            return Direction.Down;
+        return null;
+    }
 }
