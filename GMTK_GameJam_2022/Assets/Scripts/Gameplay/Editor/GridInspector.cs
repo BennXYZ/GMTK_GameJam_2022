@@ -110,7 +110,7 @@ namespace GMTKJam2022.Gameplay.Editor
 
                 if (GUILayout.Button("Flood Fill"))
                 {
-                    Dictionary<Vector2Int, CasinoGrid.GridPathInformation> floodFillResult = grid.FloodFill(selectedTiles[0], floodFillDistance);
+                    Dictionary<Vector2Int, CasinoGrid.GridPathInformation> floodFillResult = grid.FloodFill(selectedTiles[0], floodFillDistance, false);
                     foreach (var item in floodFillResult)
                     {
                         Debug.Log(item);

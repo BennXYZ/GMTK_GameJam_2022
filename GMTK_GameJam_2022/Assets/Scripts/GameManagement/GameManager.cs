@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [Space(15)]
 
     public GameObject tilePrefab;
+    public GameObject interactableIndicatorPrefab;
 
     static GameManager instance;
     public static GameManager Instance { get => instance; }

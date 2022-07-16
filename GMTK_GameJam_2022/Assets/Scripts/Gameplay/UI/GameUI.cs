@@ -14,12 +14,16 @@ public class GameUI : MonoBehaviour
     PlayerEntity player;
 
     [SerializeField]
-    UnityEvent onStartActionSelection = new UnityEvent();
-    [SerializeField]
-    UnityEvent onFinishActionSelection = new UnityEvent();
+    GameObject rollUi;
 
     [SerializeField]
-    UnityEvent onStartTileSelection = new UnityEvent();
+    GameObject chooseActionUi, entireUi;
+
+    public void EnableRollUi(bool canRoll)
+    {
+        rollUi.SetActive(canRoll);
+    }
+
     [SerializeField]
     UnityEvent onFinishTileSelection = new UnityEvent();
 
@@ -42,45 +46,10 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GameStateManager.Instance.AddStartEventsListener(GameStateManager.GameState.ActionSelection, StartActionSelection);
-        GameStateManager.Instance.AddFinishEventsListener(GameStateManager.GameState.ActionSelection, FinishActionSelection);
-        GameStateManager.Instance.AddStartEventsListener(GameStateManager.GameState.TileSelection, StartTileSelection);
-        GameStateManager.Instance.AddFinishEventsListener(GameStateManager.GameState.TileSelection, FinishTileSelection);
-    }
-
-    private void OnDestroy()
-    {
-        GameStateManager.Instance.RemoveStartEventsListener(GameStateManager.GameState.ActionSelection, StartActionSelection);
-        GameStateManager.Instance.RemoveFinishEventsListener(GameStateManager.GameState.ActionSelection, FinishActionSelection);
-        GameStateManager.Instance.AddStartEventsListener(GameStateManager.GameState.TileSelection, StartTileSelection);
-        GameStateManager.Instance.AddFinishEventsListener(GameStateManager.GameState.TileSelection, FinishTileSelection);
-    }
-
-    void StartActionSelection()
-    {
-        onStartActionSelection.Invoke();
-    }
-
-    void FinishActionSelection()
-    {
-        onFinishActionSelection.Invoke();
-    }
-
-    void StartTileSelection()
-    {
-        onStartTileSelection.Invoke();
-    }
-
-    void FinishTileSelection()
-    {
-        onFinishTileSelection.Invoke();
-    }
-
     public void Init(PlayerEntity playerEntity)
     {
         this.player = playerEntity;
+        GameStateManager.Instance.AssignUI(this);
     }
 
     public CollectedDice AddDice(Dice diceType, PlayerEntity player)
@@ -90,14 +59,30 @@ public class GameUI : MonoBehaviour
         return instantiatedPrefab;
     }
 
-    public void Move()
+    public void OnMoveButton()
     {
-        player.StartMovement(true);
-        GameManager.Instance.gameStateManager.CurrentGameState = GameStateManager.GameState.TileSelection;
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.RollForMovement;
+    }
+
+    public void RollSelectedDice()
+    {
+        player.OnRollDice();
     }
 
     public void EndMovement()
     {
-        player.FinishMovement();
+        player.EndTurn();
+    }
+
+    public void UpdateUI()
+    {
+        rollUi.SetActive(GameStateManager.Instance.CanRoll);
+        if (!GameStateManager.Instance.CanRoll)
+        {
+            player.DeselectAllDice();
+        }
+        chooseActionUi.SetActive(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.AskAction);
+        entireUi.SetActive(GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.EnemyTurn 
+            && GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting);
     }
 }

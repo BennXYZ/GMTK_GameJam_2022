@@ -49,6 +49,7 @@ MonoBehaviour:
   gameStateManager: {fileID: 0}
   inputManager: {fileID: 0}
   tilePrefab: {fileID: 7731003737169530329, guid: fba0bb07383560f4b886f746d34ab14d, type: 3}
+  interactableIndicatorPrefab: {fileID: 6848353586872960479, guid: 8ed54fa376695c840a95e77e28daa2b4, type: 3}
 --- !u!114 &2172016278545042525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,3 +75,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc99852480eb4a48aa502e1f2557697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}

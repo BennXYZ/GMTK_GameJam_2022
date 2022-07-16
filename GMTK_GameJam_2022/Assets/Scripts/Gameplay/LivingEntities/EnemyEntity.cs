@@ -68,7 +68,7 @@ public class EnemyEntity : LivingEntity
         if (Reroll)
             RollAndKeep();
 
-        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), 16);
+        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), 16, false);
         while(!moveableTiles.Any(t => t.Key == pathToFollow[nextPathTarget]))
         {
             nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;

@@ -25,11 +25,6 @@ public class LivingEntity : Entity
     public int CurrentRoll { get; }
     protected int currentRoll;
 
-    public Vector2Int GridPosition
-    {
-        get => GetNearestGridPoint(transform.position);
-    }
-
     public void DebugAttack()
     {
         Attack(debugAttackTarget);
@@ -61,7 +56,7 @@ public class LivingEntity : Entity
             MoveToPoint(targetPosition);
     }
 
-    protected Dictionary<Vector2Int, CasinoGrid.GridPathInformation> moveableTiles;
+    protected Dictionary<Vector2Int, CasinoGrid.GridPathInformation> moveableTiles = new Dictionary<Vector2Int, CasinoGrid.GridPathInformation>();
 
     public virtual void OnPathEndReached()
     {
@@ -72,7 +67,7 @@ public class LivingEntity : Entity
     {
         if (Reroll)
             RollAndKeep();
-        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll);
+        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll, false);
     }
 
     protected virtual void MoveToGridPoint(Vector2Int target)

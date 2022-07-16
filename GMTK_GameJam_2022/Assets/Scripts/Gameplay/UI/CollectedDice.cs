@@ -9,6 +9,9 @@ public class CollectedDice : MonoBehaviour
     [SerializeField]
     TMP_Text diceText;
 
+    [SerializeField]
+    Button selectButton, deSelectButton;
+
     public Dice diceType { get; private set; }
     PlayerEntity player;
 
@@ -22,5 +25,7 @@ public class CollectedDice : MonoBehaviour
     public void Select(bool value)
     {
         player.SelectDice(this, value);
+        selectButton.gameObject.SetActive(!value);
+        deSelectButton.gameObject.SetActive(value);
     }
 }

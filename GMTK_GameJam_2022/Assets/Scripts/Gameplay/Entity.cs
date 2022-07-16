@@ -6,6 +6,9 @@ using GMTKJam2022.Gameplay;
 public class Entity : MonoBehaviour
 {
     public CasinoGrid Grid { get; private set; }
+    public bool IsInteractable {
+        get => interaction != null;
+    }
 
     [SerializeField]
     Interaction interaction;
@@ -14,6 +17,19 @@ public class Entity : MonoBehaviour
     {
         Grid = grid;
         GameStateManager.Instance.AssignEntity(this);
+    }
+
+    public Vector2Int GridPosition
+    {
+        get => GetNearestGridPoint(transform.position);
+    }
+    public bool InteractionNeedsDice {
+        get
+        {
+            if (interaction == null)
+                return false;
+            return interaction.usesDiceRoll;
+        }
     }
 
     protected virtual void Awake()
@@ -32,8 +48,9 @@ public class Entity : MonoBehaviour
         return targetPosition;
     }
 
-    public virtual void Interact(LivingEntity interactor)
+    public virtual void Interact(LivingEntity interactor, int diceRoll)
     {
-        interaction.Interact(interactor);
+        if (interaction.Interact(interactor, diceRoll))
+            interaction = null;
     }
 }

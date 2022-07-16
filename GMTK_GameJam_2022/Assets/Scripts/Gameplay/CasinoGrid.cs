@@ -28,14 +28,36 @@ namespace GMTKJam2022.Gameplay
         [HideInInspector]
         public Vector2Int Size { get; private set; }
 
-        public Dictionary<Vector2Int, GridPathInformation> FloodFill(Vector2Int location, int distance)
+        public Dictionary<Vector2Int, GridPathInformation> FloodFill(Vector2Int location, int distance, bool ignoreLivingEntities)
         {
             distance = Math.Max(0, distance);
             Dictionary<Vector2Int, GridPathInformation> data = new();
 
-            FloodFill(data, location, null, 0, distance);
+            FloodFill(data, location, null, 0, distance, ignoreLivingEntities);
 
             return data;
+        }
+
+        public Dictionary<Vector2Int, GridPathInformation> GetReachableNeighbors(Vector2Int location)
+        {
+            Dictionary<Vector2Int, GridPathInformation> data = new();
+
+            foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+                TryAddingNeighbor(data, direction, location);
+
+            return data;
+        }
+
+        void TryAddingNeighbor(Dictionary<Vector2Int, GridPathInformation> data, Direction direction, Vector2Int location)
+        {
+            Vector2Int targetToCheck = location + direction.ToVector();
+            if (targetToCheck.x < 0 || targetToCheck.x >= Size.x || targetToCheck.y < 0 || targetToCheck.y >= Size.y)
+                return;
+            GridTile? tile = GetTile(targetToCheck);
+            if ((direction.ToFlag() & tile.Value.BlockedDirection) == 0 && !((direction.ToFlag() & tile.Value.BlockedDirection.Mirror()) == direction.ToFlag()))
+            {
+                data.Add(targetToCheck, new GridPathInformation(1, direction.Mirror()));
+            }
         }
 
         public GridTile? GetTile(Vector2Int coordinate)
@@ -99,11 +121,12 @@ namespace GMTKJam2022.Gameplay
             }
         }
 
-        private void FloodFill(Dictionary<Vector2Int, GridPathInformation> closedList, Vector2Int location, Direction? direction, int currentDistance, int maxDistance)
+        private void FloodFill(Dictionary<Vector2Int, GridPathInformation> closedList, Vector2Int location, Direction? direction, int currentDistance,
+            int maxDistance, bool ignoreLivingEntities)
         {
             GridTile? tile = GetTile(location);
-            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || 
-                (LivingEntities.Any(l => !(l is PlayerEntity) && l.GetNearestGridPoint(l.transform.position) == location) && currentDistance > 0))
+            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || (!ignoreLivingEntities && 
+                LivingEntities.Any(l => !(l is PlayerEntity) && l.GetNearestGridPoint(l.transform.position) == location) && currentDistance > 0))
                 return;
 
             if (direction.HasValue)
@@ -126,13 +149,13 @@ namespace GMTKJam2022.Gameplay
             if (currentDistance < maxDistance)
             {
                 if ((DirectionFlag.Up & tile.Value.BlockedDirection) == 0)
-                    FloodFill(closedList, location + Direction.Up.ToVector(), Direction.Up, currentDistance + 1, maxDistance);
+                    FloodFill(closedList, location + Direction.Up.ToVector(), Direction.Up, currentDistance + 1, maxDistance, ignoreLivingEntities);
                 if ((DirectionFlag.Left & tile.Value.BlockedDirection) == 0)
-                    FloodFill(closedList, location + Direction.Left.ToVector(), Direction.Left, currentDistance + 1, maxDistance);
+                    FloodFill(closedList, location + Direction.Left.ToVector(), Direction.Left, currentDistance + 1, maxDistance, ignoreLivingEntities);
                 if ((DirectionFlag.Right & tile.Value.BlockedDirection) == 0)
-                    FloodFill(closedList, location + Direction.Right.ToVector(), Direction.Right, currentDistance + 1, maxDistance);
+                    FloodFill(closedList, location + Direction.Right.ToVector(), Direction.Right, currentDistance + 1, maxDistance, ignoreLivingEntities);
                 if ((DirectionFlag.Down & tile.Value.BlockedDirection) == 0)
-                    FloodFill(closedList, location + Direction.Down.ToVector(), Direction.Down, currentDistance + 1, maxDistance);
+                    FloodFill(closedList, location + Direction.Down.ToVector(), Direction.Down, currentDistance + 1, maxDistance, ignoreLivingEntities);
             }
         }
 
