@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
         }
         if(Input.GetMouseButtonUp(0))
         {
-            if(GameManager.Instance.gameStateManager.CurrentGameState == GameStateManager.GameState.TileSelection
+            if(GameManager.Instance.gameStateManager.CurrentGameState == GameStateManager.GameState.MidMovement
                 && (Input.mousePosition - mouseDragStart).magnitude < selectionDragTolerance)
             {
                 RaycastHit hit;

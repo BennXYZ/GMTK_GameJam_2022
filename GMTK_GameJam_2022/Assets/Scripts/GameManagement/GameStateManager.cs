@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -9,12 +10,16 @@ public class GameStateManager : MonoBehaviour
 {
     public enum GameState
     {
-        ActionSelection,
-        TileSelection,
+        AskAction,
+        RollForMovement,
+        MidMovement,
+        RollForInteract,
         EnemyTurn,
-        Waiting
+        Waiting,
+        RollForDefense
     }
 
+    GameUI gameUi;
     public PlayerEntity playerEntity;
     List<LivingEntity> livingEntities = new List<LivingEntity>();
     List<EnemyEntity> enemies = new List<EnemyEntity>();
@@ -46,6 +51,11 @@ public class GameStateManager : MonoBehaviour
         entities.Remove(entity as LivingEntity);
     }
 
+    internal void AssignUI(GameUI gameUI)
+    {
+        gameUi = gameUI;
+    }
+
     public void DoEnemyTurns()
     {
         CurrentGameState = GameState.EnemyTurn;
@@ -61,7 +71,7 @@ public class GameStateManager : MonoBehaviour
             enemies[nextEnemyId].DoTurn(delegate { EnemyTurnFinished(nextEnemyId + 1); });
         else
         {
-            CurrentGameState = GameState.ActionSelection;
+            CurrentGameState = GameState.AskAction;
         }    
     }
 
@@ -81,6 +91,19 @@ public class GameStateManager : MonoBehaviour
                 LoadCurrentLevel();
             }
         }
+    }
+
+    public Dictionary<Vector2Int, Entity> GetInteractableEntities(Dictionary<Vector2Int, GMTKJam2022.Gameplay.CasinoGrid.GridPathInformation> gridData)
+    {
+        Dictionary<Vector2Int, Entity> result = new Dictionary<Vector2Int, Entity>();
+        foreach(Entity entity in entities)
+        {
+            if(entity.IsInteractable && gridData.Any(gd => gd.Key == entity.GridPosition))
+            {
+                result.Add(entity.GridPosition, entity);
+            }
+        }
+        return result;
     }
 
     private void LoadCurrentLevel()
@@ -136,6 +159,11 @@ public class GameStateManager : MonoBehaviour
                 stateStartEvents[value].Invoke();
             }
             currentGameState = value;
+            gameUi.UpdateUI();
         }
+    }
+
+    public bool CanRoll {
+        get => CurrentGameState == GameState.RollForMovement || CurrentGameState == GameState.RollForInteract || CurrentGameState == GameState.RollForDefense;
     }
 }

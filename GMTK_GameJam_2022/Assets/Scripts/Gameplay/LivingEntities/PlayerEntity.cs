@@ -16,6 +16,8 @@ public class PlayerEntity : LivingEntity
 
     GameUI gameUI;
     List<GameObject> spawnedTargetObjects = new List<GameObject>();
+    Dictionary<Entity, GameObject> interactableEntities = new Dictionary<Entity, GameObject>();
+    Entity objectToInteract;
 
     protected override void Awake()
     {
@@ -45,7 +47,7 @@ public class PlayerEntity : LivingEntity
     {
         if (value && collectedDice.Contains(dice) && !selectedDice.Contains(dice))
             selectedDice.Add(dice);
-        else if (value && collectedDice.Contains(dice) && selectedDice.Contains(dice))
+        else if (!value && collectedDice.Contains(dice) && selectedDice.Contains(dice))
             selectedDice.Remove(dice);
     }
 
@@ -53,10 +55,61 @@ public class PlayerEntity : LivingEntity
     {
         if(Reroll)
             RollAndKeep();
-        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll);
+        moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll, false);
         SpawnTargetObjects();
         InputManager.Instance.OnGridPointSelected.AddListener(MoveToGridPoint);
-        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.TileSelection;
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.MidMovement;
+        CheckInteractables();
+    }
+
+    public void DeselectAllDice()
+    {
+        while(selectedDice.Count > 0)
+        {
+            selectedDice[0].Select(false);
+        }
+    }
+
+    void CheckInteractables()
+    {
+        ClearInteractables();
+        Dictionary<Vector2Int, Entity>  foundInteractableEntities = GameStateManager.Instance.GetInteractableEntities(
+            Grid.GetReachableNeighbors(GridPosition));
+        foreach(var entity in foundInteractableEntities)
+        {
+            interactableEntities.Add(entity.Value, Instantiate(GameManager.Instance.interactableIndicatorPrefab,
+                entity.Value.transform.position + Vector3.up * 2, Quaternion.identity));
+        }
+    }
+
+    public void OnRollDice()
+    {
+        if(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.RollForMovement)
+        {
+            StartMovement(true);
+        }
+        else if(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.RollForInteract)
+        {
+            if (objectToInteract == null)
+            {
+                Debug.LogError("No Object To Interact");
+                return;
+            }
+            objectToInteract.Interact(this, RollDice());
+        }
+        else if (GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.RollForDefense)
+        {
+            
+        }
+    }
+
+    void ClearInteractables()
+    {
+        foreach(var entry in interactableEntities)
+        {
+            Destroy(entry.Value.gameObject);
+        }
+        interactableEntities.Clear();
     }
 
     void ClearSpawnedTargetObjects()
@@ -84,7 +137,19 @@ public class PlayerEntity : LivingEntity
     protected override void MoveToGridPoint(Vector2Int target)
     {
         if (!moveableTiles.Any(m => m.Key.Equals(target)))
+        {
+            Entity interact = interactableEntities.First(e => e.Key.GridPosition == target).Key;
+            if (interact != null)
+            {
+                Debug.Log("Interact!");
+                if (interact.InteractionNeedsDice)
+                    objectToInteract = interact;
+                else
+                    interact.Interact(this, 0);
+                ClearInteractables();
+            }
             return;
+        }
         GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.Waiting;
         ClearSpawnedTargetObjects();
         InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
@@ -115,16 +180,17 @@ public class PlayerEntity : LivingEntity
     {
         if (currentRoll > 0)
             StartMovement(false);
-        else
-            FinishMovement();
+        CheckInteractables();
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.MidMovement;
     }
 
-    public void FinishMovement()
+    public void EndTurn()
     {
         currentRoll = 0;
         moveableTiles.Clear();
         InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
         ClearSpawnedTargetObjects();
+        ClearInteractables();
         GameStateManager.Instance.DoEnemyTurns();
     }
 
@@ -135,24 +201,6 @@ public class PlayerEntity : LivingEntity
             {
                 collectedDice.Add(gameUI.AddDice(dice, this));
             }
-    }
-
-    private void Update()
-    {
-        Vector2Int targetPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x - 0.5f),
-            Mathf.RoundToInt(transform.position.z - 0.5f));
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            MoveDownPath(new List<Vector2Int> {
-                targetPosition + Vector2Int.right,
-                targetPosition + Vector2Int.right + Vector2Int.up,
-                targetPosition + Vector2Int.right + Vector2Int.up + Vector2Int.right,
-            });
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-            Move(Direction.Down);
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            Move(Direction.Right);
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-            Move(Direction.Left);
     }
 
     public override int RollDice()

@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    public virtual void Interact(LivingEntity interactor)
+    public bool usesDiceRoll;
+
+    public virtual bool Interact(LivingEntity interactor, int diceRoll)
     {
+        return false;
         //Do Something
     }
 }
