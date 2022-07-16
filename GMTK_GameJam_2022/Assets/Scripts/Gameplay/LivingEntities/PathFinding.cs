@@ -39,15 +39,15 @@ public class PathFinding
         return result;
     }
 
-    private void CheckNode(Node node, Grid grid)
+    private void CheckNode(Node node, Grid grid, Vector2Int target)
     {
-        CheckNodeForUnknown(node.position + Vector2Int.up, node);
-        CheckNodeForUnknown(node.position + Vector2Int.right, node);
-        CheckNodeForUnknown(node.position + Vector2Int.down, node);
-        CheckNodeForUnknown(node.position + Vector2Int.left, node);
+        CheckNodeForUnknown(node.position + Vector2Int.up, node, target);
+        CheckNodeForUnknown(node.position + Vector2Int.right, node, target);
+        CheckNodeForUnknown(node.position + Vector2Int.down, node, target);
+        CheckNodeForUnknown(node.position + Vector2Int.left, node, target);
     }
 
-    void CheckNodeForUnknown(Vector2Int position, Node currentNode)
+    void CheckNodeForUnknown(Vector2Int position, Node currentNode, Vector2Int target)
     {
         Node nodeToCheck = unknownNodes.First(n => n.position == position);
         if (nodeToCheck != null)
@@ -60,7 +60,7 @@ public class PathFinding
                 currentPath++;
                 parentCheckNode = parentCheckNode.bestPreviousNode;
             }
-
+            nodeToCheck.value = currentPath + (target - nodeToCheck.position).magnitude;
 
             unknownNodes.Remove(nodeToCheck);
             openList.Add(nodeToCheck);
