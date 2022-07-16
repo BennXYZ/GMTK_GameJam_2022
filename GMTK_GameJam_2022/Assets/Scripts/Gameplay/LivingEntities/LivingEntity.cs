@@ -43,7 +43,7 @@ public class LivingEntity : Entity
         Vector2Int targetPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x - 0.5f), 
             Mathf.RoundToInt(transform.position.z - 0.5f));
         targetPosition += direction.ToVector();
-        if (targetPosition.x <= grid.Size.x && targetPosition.y <= grid.Size.y && targetPosition.x >= 0 && targetPosition.y >= 0)
+        if (targetPosition.x <= Grid.Size.x && targetPosition.y <= Grid.Size.y && targetPosition.x >= 0 && targetPosition.y >= 0)
             MoveToPoint(targetPosition);
     }
 
