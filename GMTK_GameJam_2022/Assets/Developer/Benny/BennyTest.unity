@@ -159,8 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints:
   - {x: 1, y: 3}
-  - {x: 7, y: 4}
+  - {x: 4, y: 4}
+  - {x: 7, y: 7}
   - {x: 2, y: 6}
+  - {x: 0, y: 5}
 --- !u!4 &419391170
 Transform:
   m_ObjectHideFlags: 0
@@ -833,6 +835,14 @@ PrefabInstance:
     - target: {fileID: 1829351700710290353, guid: 56637f6ab5996384aacabcb410a84a04, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012483424947685456, guid: 56637f6ab5996384aacabcb410a84a04, type: 3}
+      propertyPath: pathToFollow
+      value: 
+      objectReference: {fileID: 419391169}
+    - target: {fileID: 3012483424947685456, guid: 56637f6ab5996384aacabcb410a84a04, type: 3}
+      propertyPath: movementSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56637f6ab5996384aacabcb410a84a04, type: 3}

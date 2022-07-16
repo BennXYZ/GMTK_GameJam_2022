@@ -8,6 +8,23 @@ public class AiPath : MonoBehaviour
     [SerializeField]
     List<Vector2Int> wayPoints;
 
+    public Vector2Int this[int value]
+    {
+        get
+        {
+            if (wayPoints.Count > value && value >= 0)
+            {
+                return wayPoints[value];
+            }
+            return Vector2Int.zero;
+        }
+    }
+
+    public int Count
+    {
+        get => wayPoints.Count;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, 0.5f, 0, 1);
