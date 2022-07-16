@@ -86,7 +86,7 @@ namespace GMTKJam2022.Gameplay
 
             foreach (var tempTile in tempTiles)
             {
-                if (tempTile.Key.x <= Size.x && tempTile.Key.y <= Size.y)
+                if (tempTile.Key.x < Size.x && tempTile.Key.y < Size.y)
                     tiles[tempTile.Key.x + tempTile.Key.y * Size.x] = tempTile.Value;
             }
         }
@@ -140,8 +140,8 @@ namespace GMTKJam2022.Gameplay
             for (int y = 0; y < Size.y; y++)
                 for (int x = 0; x < Size.x; x++)
                 {
-                    Vector3 location = new Vector3(Origin.x + x + 0.5f, 0, Origin.y + y + 0.5f);
                     GridTile tile = tiles[x + y * Size.x];
+                    Vector3 location = new Vector3(Origin.x + x + 0.5f, tile.HeightOffset * 0.5f, Origin.y + y + 0.5f);
                     switch (tile.Type)
                     {
                         case TileType.Empty:
@@ -186,6 +186,7 @@ namespace GMTKJam2022.Gameplay
         {
             public TileType Type;
             public DirectionFlag BlockedDirection;
+            public int HeightOffset;
         }
 
         public struct GridPathInformation
