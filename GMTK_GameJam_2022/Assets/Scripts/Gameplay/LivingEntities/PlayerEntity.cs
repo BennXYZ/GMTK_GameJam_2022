@@ -97,6 +97,8 @@ public class PlayerEntity : LivingEntity
                 return;
             }
             objectToInteract.Interact(this, RollDice());
+            currentRoll--;
+            StartMovement(false);
         }
         else if (GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.RollForDefense)
         {
@@ -148,7 +150,11 @@ public class PlayerEntity : LivingEntity
                 if (interact.InteractionNeedsDice)
                     objectToInteract = interact;
                 else
+                {
                     interact.Interact(this, 0);
+                    currentRoll--;
+                    StartMovement(false);
+                }
                 ClearInteractables();
             }
             return;

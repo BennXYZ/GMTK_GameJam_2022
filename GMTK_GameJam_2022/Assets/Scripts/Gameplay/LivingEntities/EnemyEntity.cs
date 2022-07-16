@@ -39,10 +39,10 @@ public class EnemyEntity : LivingEntity
 
     public void DoTurn(Action onTurnFinished)
     {
+        turnFinishedAction = onTurnFinished;
         StartMovement(true);
         MoveToGridPoint(followPlayer > 0 ? GameStateManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
         followPlayer--;
-        turnFinishedAction = onTurnFinished;
     }
 
     public override void OnPathEndReached()
