@@ -15,6 +15,7 @@ namespace GMTKJam2022.Gameplay.Editor
         int floodFillDistance = 0;
 
         CasinoGrid.TileType multiselectionTileType;
+        DirectionFlag multiselectionBlocker;
 
         private void OnEnable()
         {
@@ -70,7 +71,9 @@ namespace GMTKJam2022.Gameplay.Editor
 
             if (selectedTiles.Count == 1)
             {
-                floodFillDistance = EditorGUILayout.IntField("Flood Fill Distance", floodFillDistance);
+                GUILayout.Space(20);
+                using var scope = new GUILayout.HorizontalScope();
+                floodFillDistance = EditorGUILayout.IntField("Distance", floodFillDistance);
 
                 if (GUILayout.Button("Flood Fill"))
                 {
@@ -108,6 +111,7 @@ namespace GMTKJam2022.Gameplay.Editor
         private void DrawMultiSelectionInspector()
         {
             HashSet<CasinoGrid.TileType> selectedTypes = new();
+            HashSet<DirectionFlag> selectedBlockers = new();
 
             for (int i = 0; i < selectedTiles.Count; i++)
             {
@@ -116,6 +120,7 @@ namespace GMTKJam2022.Gameplay.Editor
                 if (gridTile.HasValue)
                 {
                     selectedTypes.Add(gridTile.Value.Type);
+                    selectedBlockers.Add(gridTile.Value.BlockedDirection);
                 }
                 else
                 {
@@ -124,33 +129,65 @@ namespace GMTKJam2022.Gameplay.Editor
                 }
             }
 
-            if (selectedTypes.Count > 1)
-            {
-                EditorGUI.showMixedValue = true;
-                multiselectionTileType = (CasinoGrid.TileType)int.MaxValue;
-            }
-            else
-            {
-                foreach (var type in selectedTypes)
-                    multiselectionTileType = type;
-            }
-
-            CasinoGrid.TileType tileType = (CasinoGrid.TileType)EditorGUILayout.EnumPopup(multiselectionTileType);
-            if (tileType != multiselectionTileType)
-            {
-                for (int i = 0; i < selectedTiles.Count; i++)
+            { // Selected types
+                if (selectedTypes.Count > 1)
                 {
-                    Undo.RecordObject(grid, "Tiles changed");
-                    EditorUtility.SetDirty(grid);
-                    Vector2Int coordinate = selectedTiles[i];
-                    CasinoGrid.GridTile gridTile = grid.GetTile(coordinate).Value;
-                    gridTile.Type = tileType;
-                    grid.SetTile(coordinate, gridTile);
+                    EditorGUI.showMixedValue = true;
+                    multiselectionTileType = (CasinoGrid.TileType)int.MaxValue;
                 }
-                multiselectionTileType = tileType;
+                else
+                {
+                    foreach (var type in selectedTypes)
+                        multiselectionTileType = type;
+                }
+
+                CasinoGrid.TileType tileType = (CasinoGrid.TileType)EditorGUILayout.EnumPopup("Type", multiselectionTileType);
+                if (tileType != multiselectionTileType)
+                {
+                    for (int i = 0; i < selectedTiles.Count; i++)
+                    {
+                        Undo.RecordObject(grid, "Tiles changed");
+                        EditorUtility.SetDirty(grid);
+                        Vector2Int coordinate = selectedTiles[i];
+                        CasinoGrid.GridTile gridTile = grid.GetTile(coordinate).Value;
+                        gridTile.Type = tileType;
+                        grid.SetTile(coordinate, gridTile);
+                    }
+                    multiselectionTileType = tileType;
+                }
+
+                EditorGUI.showMixedValue = false;
             }
 
-            EditorGUI.showMixedValue = false;
+            { // Selected blocker
+                if (selectedBlockers.Count > 1)
+                {
+                    EditorGUI.showMixedValue = true;
+                    multiselectionBlocker = (DirectionFlag)int.MaxValue;
+                }
+                else
+                {
+                    foreach (var selectedBlocker in selectedBlockers)
+                        multiselectionBlocker = selectedBlocker;
+                }
+
+                DirectionFlag blocker = (DirectionFlag)EditorGUILayout.EnumFlagsField("Blocked Directions", multiselectionBlocker);
+                if (blocker != multiselectionBlocker)
+                {
+                    for (int i = 0; i < selectedTiles.Count; i++)
+                    {
+                        Undo.RecordObject(grid, "Tiles changed");
+                        EditorUtility.SetDirty(grid);
+                        Vector2Int coordinate = selectedTiles[i];
+                        CasinoGrid.GridTile gridTile = grid.GetTile(coordinate).Value;
+                        gridTile.BlockedDirection = blocker;
+                        grid.SetTile(coordinate, gridTile);
+                    }
+                    multiselectionBlocker = blocker;
+                }
+
+                EditorGUI.showMixedValue = false;
+            }
         }
 
         private void DrawSingleSelectionInspector(Vector2Int coordinate)
@@ -159,12 +196,21 @@ namespace GMTKJam2022.Gameplay.Editor
             if (gridTile.HasValue)
             {
                 CasinoGrid.GridTile tile = gridTile.Value;
-                CasinoGrid.TileType tileType = (CasinoGrid.TileType)EditorGUILayout.EnumPopup(tile.Type);
+                CasinoGrid.TileType tileType = (CasinoGrid.TileType)EditorGUILayout.EnumPopup("Type", tile.Type);
                 if (tileType != tile.Type)
                 {
                     Undo.RecordObject(grid, "Tiles changed");
                     EditorUtility.SetDirty(grid);
                     tile.Type = tileType;
+                    grid.SetTile(coordinate, tile);
+                }
+
+                DirectionFlag blockedDirection = (DirectionFlag)EditorGUILayout.EnumFlagsField("Blocked Directions", tile.BlockedDirection);
+                if (blockedDirection != tile.BlockedDirection)
+                {
+                    Undo.RecordObject(grid, "Tiles changed");
+                    EditorUtility.SetDirty(grid);
+                    tile.BlockedDirection = blockedDirection;
                     grid.SetTile(coordinate, tile);
                 }
             }
