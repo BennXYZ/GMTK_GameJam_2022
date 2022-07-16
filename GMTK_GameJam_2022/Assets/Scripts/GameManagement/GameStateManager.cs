@@ -103,6 +103,13 @@ public class GameStateManager : MonoBehaviour
                 result.Add(entity.GridPosition, entity);
             }
         }
+        foreach (EnemyEntity entity in enemies)
+        {
+            if (entity.IsInteractable && gridData.Any(gd => gd.Key == entity.GridPosition))
+            {
+                result.Add(entity.GridPosition, entity);
+            }
+        }
         return result;
     }
 

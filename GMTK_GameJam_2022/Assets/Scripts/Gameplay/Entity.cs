@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GMTKJam2022.Gameplay;
+using System;
 
 public class Entity : MonoBehaviour
 {
@@ -10,13 +11,15 @@ public class Entity : MonoBehaviour
         get => interaction != null;
     }
 
-    [SerializeField]
     Interaction interaction;
 
     public virtual void Init(CasinoGrid grid)
     {
         Grid = grid;
         GameStateManager.Instance.AssignEntity(this);
+        interaction = GetComponent<Interaction>();
+        if (interaction != null)
+            interaction.Init(this);
     }
 
     public Vector2Int GridPosition
@@ -52,5 +55,12 @@ public class Entity : MonoBehaviour
     {
         if (interaction.Interact(interactor, diceRoll))
             interaction = null;
+    }
+
+    public bool CanBeInteractedWith(PlayerEntity playerEntity)
+    {
+        if (interaction == null)
+            return false;
+        return interaction.CanBeInteractedWith(playerEntity);
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1829351700710289996}
   - component: {fileID: 1829351700710290354}
   - component: {fileID: 3012483424947685456}
+  - component: {fileID: 7640181670002555511}
   m_Layer: 0
   m_Name: EnemyPrefab
   m_TagString: Untagged
@@ -111,10 +112,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e8f4d2e3f761d4ca9ee24764a69853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interaction: {fileID: 0}
+  interaction: {fileID: 7640181670002555511}
   diceType: 6
   direction: 0
-  movementSpeed: 0
+  movementSpeed: 3
   debugAttackTarget: {fileID: 0}
   canMove: 1
   pathToFollow: {fileID: 0}
+  pathStartNode: 0
+--- !u!114 &7640181670002555511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829351700710290353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12be90db62686d44aaa83c801537825f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usesDiceRoll: 0

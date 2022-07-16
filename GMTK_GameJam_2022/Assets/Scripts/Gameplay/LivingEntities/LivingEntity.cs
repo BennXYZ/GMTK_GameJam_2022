@@ -9,6 +9,7 @@ public class LivingEntity : Entity
 {
     [SerializeField]
     protected Dice diceType = Dice.D6;
+
     [SerializeField]
     protected Direction direction;
 
@@ -102,6 +103,11 @@ public class LivingEntity : Entity
         currentRoll = RollDice();
     }
 
+    public bool LooksAt(Vector2Int gridPosition)
+    {
+        return GridPosition + direction.ToVector() == gridPosition;
+    }
+
     public void MoveDownPath(List<Vector2Int> path = null)
     {
         if(path != null)
@@ -123,23 +129,21 @@ public class LivingEntity : Entity
 
     protected virtual void MoveToPoint(Vector2Int targetPosition, bool instant = false, Action onPositionReached = null)
     {
+        CasinoGrid.GridTile? gridTile = Grid.GetTile(targetPosition);
+        float heightOffset = gridTile.HasValue ? gridTile.Value.HeightOffset * 0.5f : 0;
         if(!instant)
         {
-            Direction? targetDirection = (targetPosition - GetNearestGridPoint(transform.position)).ToDirection();
+            Direction? targetDirection = (targetPosition - GridPosition).ToDirection();
             if (targetDirection.HasValue)
                 direction = targetDirection.Value;
             else
                 Debug.LogError("No Target Direction Achieved");
-        }
-
-        if (instant)
-        {
-            transform.position = new Vector3(targetPosition.x + 0.5f, 0, targetPosition.y + 0.5f);
-            onPositionReached?.Invoke();
+            StartCoroutine(TransitionToPoint(new Vector3(targetPosition.x + 0.5f, heightOffset, targetPosition.y + 0.5f), onPositionReached));
         }
         else
         {
-            StartCoroutine(TransitionToPoint(new Vector3(targetPosition.x + 0.5f, 0, targetPosition.y + 0.5f), onPositionReached));
+            transform.position = new Vector3(targetPosition.x + 0.5f, heightOffset, targetPosition.y + 0.5f);
+            onPositionReached?.Invoke();
         }
     }
 

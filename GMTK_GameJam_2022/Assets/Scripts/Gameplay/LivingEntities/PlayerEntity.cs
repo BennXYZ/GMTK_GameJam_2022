@@ -75,10 +75,11 @@ public class PlayerEntity : LivingEntity
         ClearInteractables();
         Dictionary<Vector2Int, Entity>  foundInteractableEntities = GameStateManager.Instance.GetInteractableEntities(
             Grid.GetReachableNeighbors(GridPosition));
-        foreach(var entity in foundInteractableEntities)
+        foreach (var entity in foundInteractableEntities)
         {
-            interactableEntities.Add(entity.Value, Instantiate(GameManager.Instance.interactableIndicatorPrefab,
-                entity.Value.transform.position + Vector3.up * 2, Quaternion.identity));
+            if (entity.Value.CanBeInteractedWith(this))
+                interactableEntities.Add(entity.Value, Instantiate(GameManager.Instance.interactableIndicatorPrefab,
+                    entity.Value.transform.position + Vector3.up * 2, Quaternion.identity));
         }
     }
 
@@ -127,8 +128,10 @@ public class PlayerEntity : LivingEntity
         ClearSpawnedTargetObjects();
         foreach (var tile in moveableTiles)
         {
+            CasinoGrid.GridTile? gridTile = Grid.GetTile(tile.Key);
+            float heightOffset = gridTile.HasValue ? gridTile.Value.HeightOffset * 0.5f : 0;
             GameObject newTile = Instantiate(GameManager.Instance.tilePrefab, 
-                new Vector3(tile.Key.x + 0.5f, 0.1f, tile.Key.y + 0.5f), Quaternion.identity);
+                new Vector3(tile.Key.x + 0.5f, heightOffset + 0.1f, tile.Key.y + 0.5f), Quaternion.identity);
             newTile.name = $"GridTile {tile.Key} - {tile.Value}";
             spawnedTargetObjects.Add(newTile);
         }
