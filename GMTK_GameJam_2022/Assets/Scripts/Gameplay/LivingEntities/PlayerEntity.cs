@@ -15,11 +15,7 @@ public class PlayerEntity : LivingEntity
     CollectedDice collectedDiceUiPrefab;
 
     GameUI gameUI;
-    int currentRoll;
-    Dictionary<Vector2Int, CasinoGrid.GridPathInformation> moveableTiles;
     List<GameObject> spawnedTargetObjects = new List<GameObject>();
-
-    public int CurrentRoll { get; }
 
     protected override void Awake()
     {
@@ -52,7 +48,7 @@ public class PlayerEntity : LivingEntity
             selectedDice.Remove(dice);
     }
 
-    public void StartMovement(bool Reroll)
+    public override void StartMovement(bool Reroll)
     {
         if(Reroll)
             RollAndKeep();
@@ -84,7 +80,7 @@ public class PlayerEntity : LivingEntity
         }
     }
 
-    private void MoveToGridPoint(Vector2Int target)
+    protected override void MoveToGridPoint(Vector2Int target)
     {
         if (!moveableTiles.Any(m => m.Key.Equals(target)))
             return;
@@ -122,14 +118,11 @@ public class PlayerEntity : LivingEntity
             FinishMovement();
     }
 
-    public void RollAndKeep()
-    {
-        currentRoll = RollDice();
-    }
-
     public void FinishMovement()
     {
-        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.ActionSelection;
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.EnemyTurn;
+        EnemyEntity enemy = FindObjectOfType<EnemyEntity>();
+        enemy.DoTurn();
         currentRoll = 0;
         moveableTiles.Clear();
         InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
