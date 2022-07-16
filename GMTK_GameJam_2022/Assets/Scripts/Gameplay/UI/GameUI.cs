@@ -18,6 +18,11 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     UnityEvent onFinishActionSelection = new UnityEvent();
 
+    [SerializeField]
+    UnityEvent onStartTileSelection = new UnityEvent();
+    [SerializeField]
+    UnityEvent onFinishTileSelection = new UnityEvent();
+
     public void TryAddDice()
     {
         int random = Random.Range(2, 7);
@@ -41,12 +46,16 @@ public class GameUI : MonoBehaviour
     {
         GameStateManager.Instance.AddStartEventsListener(GameStateManager.GameState.ActionSelection, StartActionSelection);
         GameStateManager.Instance.AddFinishEventsListener(GameStateManager.GameState.ActionSelection, FinishActionSelection);
+        GameStateManager.Instance.AddStartEventsListener(GameStateManager.GameState.TileSelection, StartTileSelection);
+        GameStateManager.Instance.AddFinishEventsListener(GameStateManager.GameState.TileSelection, FinishTileSelection);
     }
 
     private void OnDestroy()
     {
         GameStateManager.Instance.RemoveStartEventsListener(GameStateManager.GameState.ActionSelection, StartActionSelection);
         GameStateManager.Instance.RemoveFinishEventsListener(GameStateManager.GameState.ActionSelection, FinishActionSelection);
+        GameStateManager.Instance.AddStartEventsListener(GameStateManager.GameState.TileSelection, StartTileSelection);
+        GameStateManager.Instance.AddFinishEventsListener(GameStateManager.GameState.TileSelection, FinishTileSelection);
     }
 
     void StartActionSelection()
@@ -57,6 +66,16 @@ public class GameUI : MonoBehaviour
     void FinishActionSelection()
     {
         onFinishActionSelection.Invoke();
+    }
+
+    void StartTileSelection()
+    {
+        onStartTileSelection.Invoke();
+    }
+
+    void FinishTileSelection()
+    {
+        onFinishTileSelection.Invoke();
     }
 
     public void Init(PlayerEntity playerEntity)
@@ -73,7 +92,12 @@ public class GameUI : MonoBehaviour
 
     public void Move()
     {
-        player.StartMovement();
+        player.StartMovement(true);
         GameManager.Instance.gameStateManager.CurrentGameState = GameStateManager.GameState.TileSelection;
+    }
+
+    public void EndMovement()
+    {
+        player.FinishMovement();
     }
 }

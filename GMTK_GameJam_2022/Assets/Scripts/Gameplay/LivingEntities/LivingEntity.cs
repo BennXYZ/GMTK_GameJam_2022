@@ -50,6 +50,11 @@ public class LivingEntity : Entity
             MoveToPoint(targetPosition);
     }
 
+    public virtual void OnPathEndReached()
+    {
+
+    }
+
     public void MoveDownPath(List<Vector2Int> path = null)
     {
         if(path != null)
@@ -61,7 +66,10 @@ public class LivingEntity : Entity
             MoveToPoint(currentPath[0], false, delegate
             {
                 currentPath.RemoveAt(0);
-                MoveDownPath();
+                if(currentPath.Count == 0)
+                    OnPathEndReached();
+                else
+                   MoveDownPath();
             });
         }
     }
