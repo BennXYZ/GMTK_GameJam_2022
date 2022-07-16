@@ -71,7 +71,7 @@ namespace GMTKJam2022.Gameplay
 
         public GridTile? GetTile(Vector2Int coordinate)
         {
-            if (Size.x >= coordinate.x && Size.y >= coordinate.y)
+            if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
             {
                 return tiles[coordinate.x + coordinate.y * Size.x];
             }
@@ -80,7 +80,7 @@ namespace GMTKJam2022.Gameplay
 
         public void SetTile(Vector2Int coordinate, GridTile tile)
         {
-            if (Size.x >= coordinate.x && Size.y >= coordinate.y)
+            if (coordinate.x >= 0 && Size.x >= coordinate.x && coordinate.y >= 0 && Size.y >= coordinate.y)
             {
                 tiles[coordinate.x + coordinate.y * Size.x] = tile;
             }
@@ -102,6 +102,40 @@ namespace GMTKJam2022.Gameplay
             }
 
             return newCoordinate;
+        }
+
+        public Dictionary<Vector2Int, int> FloodFill(Vector2Int location, int distance)
+        {
+            distance = Math.Max(0, distance);
+            Dictionary<Vector2Int, int> data = new();
+
+            FloodFill(data, location, 0, distance);
+
+            return data;
+        }
+
+        private void FloodFill(Dictionary<Vector2Int, int> closedList, Vector2Int location, int currentDistance, int maxDistance)
+        {
+            GridTile? tile = GetTile(location);
+            if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
+                return;
+
+            if (closedList.TryGetValue(location, out int distance))
+            {
+                if (distance > currentDistance)
+                    closedList[location] = currentDistance;
+                return;
+            }
+
+            closedList.Add(location, currentDistance);
+
+            if (currentDistance < maxDistance)
+            {
+                FloodFill(closedList, location + Direction.Up.ToVector(), currentDistance + 1, maxDistance);
+                FloodFill(closedList, location + Direction.Left.ToVector(), currentDistance + 1, maxDistance);
+                FloodFill(closedList, location + Direction.Right.ToVector(), currentDistance + 1, maxDistance);
+                FloodFill(closedList, location + Direction.Down.ToVector(), currentDistance + 1, maxDistance);
+            }
         }
     }
 }

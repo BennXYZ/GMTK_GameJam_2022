@@ -12,6 +12,7 @@ namespace GMTKJam2022.Gameplay.Editor
 
         List<Vector2Int> selectedTiles = new List<Vector2Int>();
         Vector2Int newSize;
+        int floodFillDistance = 0;
 
         Grid.TileType multiselectionTileType;
 
@@ -19,11 +20,12 @@ namespace GMTKJam2022.Gameplay.Editor
         {
             grid = target as Grid;
             newSize = grid.Size;
-            selectedTiles.Clear();
+            ClearSelection();
         }
 
         private void OnSceneGUI()
         {
+            bool selectionChanged = false;
             for (int y = 0; y < grid.Size.y; y++)
             {
                 for (int x = 0; x < grid.Size.x; x++)
@@ -37,9 +39,14 @@ namespace GMTKJam2022.Gameplay.Editor
                             selectedTiles.Remove(new Vector2Int(x, y));
                         else
                             selectedTiles.Add(new Vector2Int(x, y));
+
+                        selectionChanged = true;
                     }
                 }
             }
+            // Refresh the inspector
+            if (selectionChanged)
+                Repaint();
         }
 
         public override void OnInspectorGUI()
@@ -51,7 +58,7 @@ namespace GMTKJam2022.Gameplay.Editor
                 using var scope = new GUILayout.HorizontalScope();
                 if (GUILayout.Button("Resize"))
                 {
-                    selectedTiles.Clear();
+                    ClearSelection();
                     grid.Resize(newSize);
                 }
 
@@ -59,12 +66,42 @@ namespace GMTKJam2022.Gameplay.Editor
                     newSize = grid.Size;
             }
 
+            DrawSelectionInspector();
+
+            if (selectedTiles.Count == 1)
+            {
+                floodFillDistance = EditorGUILayout.IntField("Flood Fill Distance", floodFillDistance);
+
+                if (GUILayout.Button("Flood Fill"))
+                {
+                    Dictionary<Vector2Int, int> floodFillResult = grid.FloodFill(selectedTiles[0], floodFillDistance);
+                    foreach (var item in floodFillResult)
+                    {
+                        Debug.Log(item);
+                    }
+                }
+            }
+        }
+
+        private void DrawSelectionInspector()
+        {
+            GUILayout.Space(20);
+            GUILayout.Label(selectedTiles.Count <= 1 ? "Selected Tile" : "Selected Tile (multiple)", EditorStyles.boldLabel);
             if (selectedTiles.Count > 0)
             {
                 if (selectedTiles.Count == 1)
                     DrawSingleSelectionInspector(selectedTiles[0]);
                 else
                     DrawMultiSelectionInspector();
+
+                if (GUILayout.Button("Clear Selection"))
+                {
+                    ClearSelection();
+                }
+            }
+            else
+            {
+                GUILayout.Label("None");
             }
         }
 
@@ -82,7 +119,7 @@ namespace GMTKJam2022.Gameplay.Editor
                 }
                 else
                 {
-                    selectedTiles.Clear();
+                    ClearSelection();
                     break;
                 }
             }
@@ -103,6 +140,8 @@ namespace GMTKJam2022.Gameplay.Editor
             {
                 for (int i = 0; i < selectedTiles.Count; i++)
                 {
+                    Undo.RecordObject(grid, "Tiles changed");
+                    EditorUtility.SetDirty(grid);
                     Vector2Int coordinate = selectedTiles[i];
                     Grid.GridTile gridTile = grid.GetTile(coordinate).Value;
                     gridTile.Type = tileType;
@@ -123,14 +162,22 @@ namespace GMTKJam2022.Gameplay.Editor
                 Grid.TileType tileType = (Grid.TileType)EditorGUILayout.EnumPopup(tile.Type);
                 if (tileType != tile.Type)
                 {
+                    Undo.RecordObject(grid, "Tiles changed");
+                    EditorUtility.SetDirty(grid);
                     tile.Type = tileType;
                     grid.SetTile(coordinate, tile);
                 }
             }
             else
             {
-                selectedTiles.Clear();
+                ClearSelection();
             }
+        }
+
+        private void ClearSelection()
+        {
+            EditorUtility.SetDirty(grid);
+            selectedTiles.Clear();
         }
     }
 }
