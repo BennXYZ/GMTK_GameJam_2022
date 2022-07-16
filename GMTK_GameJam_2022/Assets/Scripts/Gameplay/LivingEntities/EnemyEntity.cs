@@ -52,6 +52,10 @@ public class EnemyEntity : LivingEntity
             RollAndKeep();
 
         moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), 16);
+        while(!moveableTiles.Any(t => t.Key == pathToFollow[nextPathTarget]))
+        {
+            nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;
+        }
     }
 
     protected override void MoveToGridPoint(Vector2Int target)

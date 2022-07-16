@@ -102,7 +102,8 @@ namespace GMTKJam2022.Gameplay
         private void FloodFill(Dictionary<Vector2Int, GridPathInformation> closedList, Vector2Int location, Direction? direction, int currentDistance, int maxDistance)
         {
             GridTile? tile = GetTile(location);
-            if (!tile.HasValue || tile.Value.Type == TileType.Blocked)
+            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || 
+                (LivingEntities.Any(l => l.GetNearestGridPoint(l.transform.position) == location) && currentDistance > 0))
                 return;
 
             if (direction.HasValue)
@@ -119,7 +120,7 @@ namespace GMTKJam2022.Gameplay
                 else
                     return;
             }
-            else
+            else if(currentDistance > 0)
                 closedList.TryAdd(location, new GridPathInformation(currentDistance, direction.Mirror()));
 
             if (currentDistance < maxDistance)
