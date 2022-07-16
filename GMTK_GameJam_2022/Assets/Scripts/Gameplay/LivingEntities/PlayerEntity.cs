@@ -52,9 +52,10 @@ public class PlayerEntity : LivingEntity
             selectedDice.Remove(dice);
     }
 
-    public void StartMovement()
+    public void StartMovement(bool Reroll)
     {
-        RollAndKeep();
+        if(Reroll)
+            RollAndKeep();
         moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), currentRoll);
         SpawnTargetObjects();
         InputManager.Instance.OnGridPointSelected.AddListener(MoveToGridPoint);
@@ -68,6 +69,7 @@ public class PlayerEntity : LivingEntity
             Destroy(tile);
         }
         spawnedTargetObjects.Clear();
+        //moveableTiles.Clear();
     }
 
     private void SpawnTargetObjects()
@@ -86,11 +88,14 @@ public class PlayerEntity : LivingEntity
     {
         if (!moveableTiles.Any(m => m.Key.Equals(target)))
             return;
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.Waiting;
         ClearSpawnedTargetObjects();
         InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
         List<KeyValuePair<Vector2Int, CasinoGrid.GridPathInformation>> path = 
             new List<KeyValuePair<Vector2Int, CasinoGrid.GridPathInformation>>();
+
         path.Add(moveableTiles.First(m => m.Key == target));
+        currentRoll -= (path[0].Value.Distance);
 
         int maxIterations = 50;
         while(!path.Any(p => p.Value.Distance == 1) && maxIterations > 0)
@@ -109,9 +114,26 @@ public class PlayerEntity : LivingEntity
         MoveDownPath(path.Select(p => p.Key).ToList());
     }
 
+    public override void OnPathEndReached()
+    {
+        if (currentRoll > 0)
+            StartMovement(false);
+        else
+            FinishMovement();
+    }
+
     public void RollAndKeep()
     {
         currentRoll = RollDice();
+    }
+
+    public void FinishMovement()
+    {
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.ActionSelection;
+        currentRoll = 0;
+        moveableTiles.Clear();
+        InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
+        ClearSpawnedTargetObjects();
     }
 
     public void AddDice(List<Dice> diceToCollect)
