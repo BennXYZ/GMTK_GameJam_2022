@@ -29,7 +29,7 @@ public class EnemyEntity : LivingEntity
     public void DoTurn()
     {
         StartMovement(true);
-        MoveToGridPoint(followPlayer > 0 ? GameManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
+        MoveToGridPoint(followPlayer > 0 ? GameStateManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
         followPlayer--;
     }
 
@@ -112,12 +112,12 @@ public class EnemyEntity : LivingEntity
                 }
                 else
                 {
-                    if (targetPosition == GameManager.Instance.playerEntity.GridPosition)
+                    if (targetPosition == GameStateManager.Instance.playerEntity.GridPosition)
                     {
                         currentPath.Clear();
                         currentRoll = 0;
                         OnPathEndReached();
-                        Attack(GameManager.Instance.playerEntity);
+                        Attack(GameStateManager.Instance.playerEntity);
                     }
                     else
                     {
@@ -162,7 +162,7 @@ public class EnemyEntity : LivingEntity
             positionToCheck += direction.ToVector();
             if (!moveableTiles.Any(t => t.Key == positionToCheck))
                 return false;
-            if (positionToCheck == GameManager.Instance.playerEntity.GridPosition)
+            if (positionToCheck == GameStateManager.Instance.playerEntity.GridPosition)
                 return true;
         }
     }

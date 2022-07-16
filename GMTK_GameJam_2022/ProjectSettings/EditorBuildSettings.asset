@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Developer/Benny/BennyTest.unity
     guid: 5562fde2666947a4796a73c6c374d1fe
+  - enabled: 1
+    path: Assets/Scenes/Level/Level01.unity
+    guid: 5d0c2844ba5c24b44ad8728580a7425c
   m_configObjects: {}

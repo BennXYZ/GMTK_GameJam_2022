@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -12,6 +13,42 @@ public class GameStateManager : MonoBehaviour
         TileSelection,
         EnemyTurn,
         Waiting
+    }
+
+    public PlayerEntity playerEntity;
+    List<LivingEntity> livingEntities = new List<LivingEntity>();
+    List<Entity> entities = new List<Entity>();
+
+    int currentLevel = 0;
+
+    public int CurrentLevel
+    {
+        get
+        {
+            return currentLevel;
+        }
+        set
+        {
+            if(currentLevel != value)
+            {
+                currentLevel = value;
+                LoadCurrentLevel();
+            }
+        }
+    }
+
+    private void LoadCurrentLevel()
+    {
+        SceneManager.LoadScene(string.Format("Level{0:00}", currentLevel));
+    }
+
+    public void AssignEntity(Entity entity)
+    {
+        if(entity is PlayerEntity)
+        {
+            playerEntity = entity as PlayerEntity;
+            return;
+        }
     }
 
     public static GameStateManager Instance { get => GameManager.Instance.gameStateManager; }
