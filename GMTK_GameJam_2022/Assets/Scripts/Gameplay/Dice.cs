@@ -12,7 +12,7 @@ public enum Dice
 
 public static class DiceSystem
 {
-    public static int RollDice(Dice die)
+    public static int RollDice(this Dice die)
     {
         return Random.Range(0, (int)die) + 1;
     }
