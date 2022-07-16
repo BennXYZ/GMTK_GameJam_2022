@@ -75,12 +75,14 @@ public class PlayerEntity : LivingEntity
         {
             GameObject newTile = Instantiate(GameManager.Instance.tilePrefab, 
                 new Vector3(tile.Key.x + 0.5f, 0.1f, tile.Key.y + 0.5f), Quaternion.identity);
+            newTile.name = $"GridTile {tile.Key} - {tile.Value}";
             spawnedTargetObjects.Add(newTile);
         }
     }
 
     private void MoveToGridPoint(Vector2Int target)
     {
+        InputManager.Instance.OnGridPointSelected.RemoveListener(MoveToGridPoint);
 
     }
 

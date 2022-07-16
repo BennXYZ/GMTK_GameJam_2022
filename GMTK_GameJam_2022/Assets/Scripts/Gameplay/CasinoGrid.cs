@@ -114,10 +114,11 @@ namespace GMTKJam2022.Gameplay
             {
                 if (distance > currentDistance)
                     closedList[location] = currentDistance;
-                return;
+                else
+                    return;
             }
-
-            closedList.Add(location, currentDistance);
+            else
+                closedList.TryAdd(location, currentDistance);
 
             if (currentDistance < maxDistance)
             {
