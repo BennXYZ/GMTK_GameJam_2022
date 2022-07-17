@@ -188,4 +188,12 @@ public class GameStateManager : MonoBehaviour
     {
         get => CurrentGameState == GameState.RollForMovement || CurrentGameState == GameState.RollForInteract || CurrentGameState == GameState.RollForDefense;
     }
+
+    public void CheckEnemyVision()
+    {
+        foreach(EnemyEntity enemy in enemies)
+        {
+            enemy.CheckVision();
+        }
+    }
 }

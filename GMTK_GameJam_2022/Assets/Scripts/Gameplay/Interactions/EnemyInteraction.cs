@@ -16,7 +16,8 @@ public class EnemyInteraction : Interaction
 
     public override bool CanBeInteractedWith(LivingEntity interactor)
     {
-        return (entity as LivingEntity).LooksAwayFrom(interactor.GridPosition);
+        EnemyEntity enemy = (entity as EnemyEntity);
+        return enemy.LooksAwayFrom(interactor.GridPosition) && enemy.CurrentAggrolevel == EnemyEntity.AggroLevel.Calm;
     }
 
     public override bool Interact(LivingEntity interactor, int diceRoll)
