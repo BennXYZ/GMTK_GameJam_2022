@@ -94,7 +94,7 @@ public class PlayerEntity : LivingEntity
         {
             if (entity.Value.CanBeInteractedWith(this))
                 interactableEntities.Add(entity.Value, Instantiate(GameManager.Instance.interactableIndicatorPrefab,
-                    entity.Value.transform.position + Vector3.up * 2, Quaternion.identity));
+                    entity.Value.transform.position, Quaternion.identity));
         }
     }
 

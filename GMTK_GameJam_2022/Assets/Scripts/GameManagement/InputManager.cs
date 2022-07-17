@@ -28,12 +28,7 @@ public class InputManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            mouseDragStart = Input.mousePosition;
-        }
-        if(Input.GetMouseButtonUp(0))
-        {
-            if(GameManager.Instance.gameStateManager.CurrentGameState == GameStateManager.GameState.MidMovement
-                && (Input.mousePosition - mouseDragStart).magnitude < selectionDragTolerance)
+            if(GameManager.Instance.gameStateManager.CurrentGameState == GameStateManager.GameState.MidMovement)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
