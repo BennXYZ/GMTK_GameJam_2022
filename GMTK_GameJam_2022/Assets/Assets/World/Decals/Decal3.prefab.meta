@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 56db77c29e2ff7240abaf07c31241698
+guid: 7cbaed4a99f8a444b9e11ac5859784d4
 labels:
-- Enemy
-- Entity
+- Decal
 PrefabImporter:
   externalObjects: {}
   userData: 

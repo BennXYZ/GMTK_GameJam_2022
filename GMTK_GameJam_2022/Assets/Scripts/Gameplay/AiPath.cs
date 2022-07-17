@@ -6,7 +6,7 @@ using UnityEngine;
 public class AiPath : MonoBehaviour
 {
     [SerializeField]
-    List<Vector2Int> wayPoints;
+    List<Vector2Int> wayPoints = new List<Vector2Int>();
 
     public Vector2Int this[int value]
     {
