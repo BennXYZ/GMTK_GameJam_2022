@@ -45,7 +45,9 @@ public class CollectedDice : MonoBehaviour
     public void Select(bool value)
     {
         if (!GameStateManager.Instance.CanRoll)
+        {
             return;
+        }
         SetSprite(value);
         player.SelectDice(this, value);
         selectButton.gameObject.SetActive(!value);

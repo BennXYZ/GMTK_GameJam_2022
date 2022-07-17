@@ -21,6 +21,9 @@ public class PlayerEntity : LivingEntity
     Entity objectToInteract;
 
     [SerializeField]
+    int maxSelectableDice;
+
+    [SerializeField]
     CameraMovement cameraPrefab;
 
     [SerializeField]
@@ -45,6 +48,11 @@ public class PlayerEntity : LivingEntity
         animator.SetTrigger("Interact");
         if (targetDirection.HasValue)
             direction = targetDirection.Value;
+    }
+
+    public bool CanSelectDice()
+    {
+        return selectedDice.Count >= maxSelectableDice;
     }
 
     public override void Init(CasinoGrid grid)
