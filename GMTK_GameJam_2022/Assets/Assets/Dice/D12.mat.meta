@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: 18addcbb6b8f7314f83b55f6230eb7cb
-labels:
-- Dice
-PrefabImporter:
+guid: f502c92895fa2474284a1d8b2b30564f
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
