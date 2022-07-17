@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class EnemyEntity : LivingEntity
 {
-    enum AggroLevel
+    public enum AggroLevel
     {
         Calm = 1,
         Sus = 2,
@@ -25,7 +25,9 @@ public class EnemyEntity : LivingEntity
 
     int nextPathTarget;
 
-    AggroLevel currentAggrolevel = AggroLevel.Calm;
+    public AggroLevel CurrentAggrolevel { get {
+            return followPlayer > 0 ? AggroLevel.Sus : AggroLevel.Calm;
+        } }
 
     int followPlayer = 0;
 
@@ -184,6 +186,14 @@ public class EnemyEntity : LivingEntity
         }
     }
 
+    public void CheckVision()
+    {
+        if(CheckVisiblePlayer())
+        {
+            followPlayer = 3;
+        }
+    }
+
     private bool CheckVisiblePlayer()
     {
         Vector2Int positionToCheck = GridPosition;
@@ -200,7 +210,7 @@ public class EnemyEntity : LivingEntity
     public override int RollDice()
     {
         int diceRoll = 0;
-        for (int i = 0; i < (int)currentAggrolevel; i++)
+        for (int i = 0; i < (int)CurrentAggrolevel; i++)
         {
             diceRoll += base.RollDice();
         }

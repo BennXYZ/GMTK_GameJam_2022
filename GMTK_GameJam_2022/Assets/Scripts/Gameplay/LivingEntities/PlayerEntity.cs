@@ -244,6 +244,7 @@ public class PlayerEntity : LivingEntity
             StartMovement(false);
         CheckInteractables();
         GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.MidMovement;
+        GameStateManager.Instance.CheckEnemyVision();
     }
 
     public void EndTurn()
