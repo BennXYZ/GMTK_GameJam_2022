@@ -17,7 +17,7 @@ public class GameUI : MonoBehaviour
     GameObject rollUi;
 
     [SerializeField]
-    GameObject chooseActionUi, entireUi;
+    GameObject chooseActionUi, entireUi, endTurnButton;
 
     public void EnableRollUi(bool canRoll)
     {
@@ -50,6 +50,7 @@ public class GameUI : MonoBehaviour
     {
         this.player = playerEntity;
         GameStateManager.Instance.AssignUI(this);
+        UpdateUI();
     }
 
     public CollectedDice AddDice(Dice diceType, PlayerEntity player)
@@ -84,5 +85,8 @@ public class GameUI : MonoBehaviour
         chooseActionUi.SetActive(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.AskAction);
         entireUi.SetActive(GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.EnemyTurn 
             && GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting);
+        endTurnButton.SetActive(GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting &&
+            GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.EnemyTurn &&
+            !GameStateManager.Instance.CanRoll);
     }
 }

@@ -45,6 +45,7 @@ public class PlayerEntity : LivingEntity
         gameUI = Instantiate(canvasPrefabPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<GameUI>();
         Instantiate(eventSystem.gameObject, Vector3.zero, Quaternion.identity);
         gameUI.Init(this);
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.AskAction;
     }
 
     protected override void Attack(LivingEntity target)
