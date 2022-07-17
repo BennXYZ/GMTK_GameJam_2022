@@ -114,7 +114,7 @@ public class PlayerEntity : LivingEntity
 
     public void OnStartTurn()
     {
-        if (collectedDice.Count == 0)
+        if (!collectedDice.Any(d => d.diceType == Dice.D6))
             AddDice(new List<Dice>() { diceType });
         CheckInteractables(true);
     }
