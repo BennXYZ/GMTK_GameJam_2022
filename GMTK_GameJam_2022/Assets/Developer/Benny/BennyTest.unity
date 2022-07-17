@@ -303,6 +303,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usesDiceRoll: 0
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []
   diceToCollect: 08000000
 --- !u!1 &631165292
 GameObject:
@@ -956,6 +959,10 @@ PrefabInstance:
       propertyPath: laserWall
       value: 
       objectReference: {fileID: 8412285038862775012}
+    - target: {fileID: 348188598406383862, guid: 992fd33277a4eec4a988b6500f5bdb90, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6292793616704518271, guid: 992fd33277a4eec4a988b6500f5bdb90, type: 3}
       propertyPath: m_RootOrder
       value: 0

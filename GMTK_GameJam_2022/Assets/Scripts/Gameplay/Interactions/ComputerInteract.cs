@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class ComputerInteract : Interaction
 {
@@ -27,6 +28,17 @@ public class ComputerInteract : Interaction
     [SerializeField]
     Material disabledMaterial;
 
+    [SerializeField]
+    TMP_Text numberField;
+
+    [SerializeField]
+    string hackedText = "[ERROR]";
+
+    private void Awake()
+    {
+        numberField.text = numberToBeat.ToString();
+    }
+
     public override bool Interact(LivingEntity interactor, int diceRoll)
     {
         if(diceRoll > numberToBeat)
@@ -37,6 +49,7 @@ public class ComputerInteract : Interaction
             {
                 decal.material = disabledMaterial;
             }
+            numberField.text = hackedText;
             onInteract.Invoke();
             return true;
         }

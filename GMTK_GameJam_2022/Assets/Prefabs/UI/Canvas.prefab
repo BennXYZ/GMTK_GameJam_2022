@@ -292,7 +292,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 250, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &7239219830569876020
 MonoBehaviour:
@@ -2083,6 +2083,7 @@ GameObject:
   - component: {fileID: 2258151275054239888}
   - component: {fileID: 3417677182804765730}
   - component: {fileID: 7716347421050563233}
+  - component: {fileID: 1678107488188774532}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -2139,6 +2140,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &1678107488188774532
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7553167841630554277}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &8343499840794109978
 GameObject:
   m_ObjectHideFlags: 0
