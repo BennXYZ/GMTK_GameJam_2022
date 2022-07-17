@@ -44,7 +44,7 @@ public class CollectedDice : MonoBehaviour
 
     public void Select(bool value)
     {
-        if (!GameStateManager.Instance.CanRoll)
+        if (!GameStateManager.Instance.CanRoll || !player.CanSelectDice())
         {
             return;
         }
