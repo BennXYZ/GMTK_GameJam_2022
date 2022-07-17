@@ -110,7 +110,7 @@ RectTransform:
   - {fileID: 6229620793130396870}
   - {fileID: 8788224047116078752}
   - {fileID: 6229620792592824211}
-  - {fileID: 5113950551677202743}
+  - {fileID: 6229620791378494863}
   m_Father: {fileID: 6229620793141473033}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -273,14 +273,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6229620793045926108}
-  m_Father: {fileID: 5113950551677202743}
-  m_RootOrder: 0
+  m_Father: {fileID: 7554483661692951356}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -173.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 250, y: 75}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6229620791378494860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1438,49 +1438,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectedDiceListParent: {fileID: 6229620791142968253}
   collectedDicePrefab: {fileID: 6761526077216183340, guid: 11caf4991423ec543bf7b2c8ee1428d1, type: 3}
-  rollUi: {fileID: 6777686162793503092}
+  rollUi: {fileID: 6229620791378494848}
   chooseActionUi: {fileID: 6229620791981616744}
   entireUi: {fileID: 2721348111974809164}
   endTurnButton: {fileID: 6229620792592824212}
   interactablesUiPrefab: {fileID: 5101698435839668053, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
   interactablesUiParent: {fileID: 2458656482391032074}
---- !u!1 &6777686162793503092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5113950551677202743}
-  m_Layer: 5
-  m_Name: RollUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &5113950551677202743
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6777686162793503092}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6229620791378494863}
-  m_Father: {fileID: 7554483661692951356}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8715938678888764288
 GameObject:
   m_ObjectHideFlags: 0

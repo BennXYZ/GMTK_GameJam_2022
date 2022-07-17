@@ -16,7 +16,7 @@ public class EnemyInteraction : Interaction
 
     public override bool CanBeInteractedWith(LivingEntity interactor)
     {
-        return !(entity as LivingEntity).LooksAt(interactor.GridPosition);
+        return (entity as LivingEntity).LooksAwayFrom(interactor.GridPosition);
     }
 
     public override bool Interact(LivingEntity interactor, int diceRoll)

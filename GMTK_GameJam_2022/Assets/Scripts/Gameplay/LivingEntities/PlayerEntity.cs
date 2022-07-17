@@ -36,6 +36,13 @@ public class PlayerEntity : LivingEntity
         base.Awake();
     }
 
+    internal void AfterInteraction()
+    {
+        currentRoll = 0;
+        StartMovement(false);
+        CheckForInteractions();
+    }
+
     public override void Init(CasinoGrid grid)
     {
         base.Init(grid);
@@ -82,6 +89,12 @@ public class PlayerEntity : LivingEntity
         {
             selectedDice[0].Select(false);
         }
+    }
+
+    public void OnStartTurn()
+    {
+        if (collectedDice.Count == 0)
+            AddDice(new List<Dice>() { diceType });
     }
 
     void CheckInteractables()
@@ -176,22 +189,26 @@ public class PlayerEntity : LivingEntity
     {
         if (!moveableTiles.Any(m => m.Key.Equals(target)))
         {
-            Entity interact = interactableEntities.First(e => e.Key.GridPosition == target).Key;
-            if (interact != null)
+            if(interactableEntities.Any(e => e.Key.GridPosition == target))
             {
-                Debug.Log("Interact!");
-                if (interact.InteractionNeedsDice)
+                Entity interact = interactableEntities.First(e => e.Key.GridPosition == target).Key;
+                if (interact != null)
                 {
-                    RollForInteraction(interact);
+                    Debug.Log("Interact!");
+                    if (interact.InteractionNeedsDice)
+                    {
+                        RollForInteraction(interact);
+                    }
+                    else
+                    {
+                        interact.Interact(this, 0);
+                        currentRoll = 0;
+                        StartMovement(false);
+                    }
+                    ClearInteractables();
                 }
-                else
-                {
-                    interact.Interact(this, 0);
-                    currentRoll = 0;
-                    StartMovement(false);
-                }
-                ClearInteractables();
             }
+
             return;
         }
         GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.Waiting;
@@ -251,7 +268,6 @@ public class PlayerEntity : LivingEntity
     public override int RollDice()
     {
         int currentRoll = 0;
-        currentRoll += diceType.RollDice();
         string debugText = currentRoll.ToString();
         int prevRoll = 0;
         while(selectedDice.Count > 0)
@@ -265,6 +281,6 @@ public class PlayerEntity : LivingEntity
             Destroy(selectedDie.gameObject);
         }
         Debug.Log($"PlayerRoll: {debugText} = {currentRoll}");
-        return currentRoll;
+        return Mathf.Max(currentRoll,1);
     }
 }

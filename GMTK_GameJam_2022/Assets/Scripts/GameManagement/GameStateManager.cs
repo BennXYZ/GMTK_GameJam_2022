@@ -168,15 +168,17 @@ public class GameStateManager : MonoBehaviour
         get => currentGameState;
         set
         {
+            bool newState = false;
             if (currentGameState != value)
             {
+                newState = true;
                 stateFinishEvents[currentGameState].Invoke();
                 stateStartEvents[value].Invoke();
             }
             currentGameState = value;
-            if(CurrentGameState == GameState.AskAction)
+            if(CurrentGameState == GameState.AskAction && newState)
             {
-                playerEntity.CheckForInteractions();
+                playerEntity.OnStartTurn();
             }
             gameUi.UpdateUI();
         }

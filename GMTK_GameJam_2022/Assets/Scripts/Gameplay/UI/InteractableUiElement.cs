@@ -24,7 +24,10 @@ public class InteractableUiElement : MonoBehaviour
     public void Interact()
     {
         if (!entityToInteract.InteractionNeedsDice)
+        {
             entityToInteract.Interact(GameStateManager.Instance.playerEntity, 0);
+            GameStateManager.Instance.playerEntity.AfterInteraction();
+        }
         else
             GameStateManager.Instance.playerEntity.RollForInteraction(entityToInteract);
     }
