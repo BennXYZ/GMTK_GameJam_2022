@@ -14,7 +14,13 @@ public class LivingEntity : Entity
     protected Direction direction;
 
     [SerializeField]
+    protected Animator animator;
+
+    [SerializeField]
     float movementSpeed;
+
+    [SerializeField]
+    float rotationSpeed = 1000;
 
     [SerializeField]
     LivingEntity debugAttackTarget;
@@ -61,7 +67,8 @@ public class LivingEntity : Entity
 
     public virtual void OnPathEndReached()
     {
-
+        if (animator)
+            animator.SetBool("IsWalking", false);
     }
 
     public virtual void StartMovement(bool Reroll)
@@ -73,6 +80,8 @@ public class LivingEntity : Entity
 
     protected virtual void MoveToGridPoint(Vector2Int target)
     {
+        if (animator)
+            animator.SetBool("IsWalking", true);
         if (!moveableTiles.Any(m => m.Key.Equals(target)))
             return;
         List<KeyValuePair<Vector2Int, CasinoGrid.GridPathInformation>> path =
@@ -110,7 +119,9 @@ public class LivingEntity : Entity
 
     public void MoveDownPath(List<Vector2Int> path = null)
     {
-        if(path != null)
+        if (animator)
+            animator.SetBool("IsWalking", true);
+        if (path != null)
         {
             currentPath = path;
         }
@@ -125,6 +136,24 @@ public class LivingEntity : Entity
                    MoveDownPath();
             });
         }
+    }
+
+    protected virtual void Update()
+    {
+        Vector3 currentEuler = transform.rotation.eulerAngles;
+        Vector3 targetEuler = Vector3.zero;
+        switch (direction)
+        {
+            case Direction.Down:
+                targetEuler = Vector3.up * 270; break;
+            case Direction.Up:
+                targetEuler = Vector3.up * 90; break;
+            case Direction.Left:
+                targetEuler = Vector3.up * 0; break;
+            case Direction.Right:
+                targetEuler = Vector3.up * 180; break;
+        }
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetEuler), rotationSpeed * Time.deltaTime);
     }
 
     protected virtual void MoveToPoint(Vector2Int targetPosition, bool instant = false, Action onPositionReached = null)
@@ -166,7 +195,7 @@ public class LivingEntity : Entity
             }
             else
             {
-                transform.Translate(movement);
+                transform.Translate(movement, Space.World);
                 yield return null;
             }
         }

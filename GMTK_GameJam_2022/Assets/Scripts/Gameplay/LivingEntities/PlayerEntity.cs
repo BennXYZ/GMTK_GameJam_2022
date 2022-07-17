@@ -187,6 +187,7 @@ public class PlayerEntity : LivingEntity
 
     public override void OnPathEndReached()
     {
+        base.OnPathEndReached();
         if (currentRoll > 0)
             StartMovement(false);
         CheckInteractables();
