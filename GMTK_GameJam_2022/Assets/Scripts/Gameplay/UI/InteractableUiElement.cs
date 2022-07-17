@@ -26,7 +26,7 @@ public class InteractableUiElement : MonoBehaviour
         if (!entityToInteract.InteractionNeedsDice)
         {
             entityToInteract.Interact(GameStateManager.Instance.playerEntity, 0);
-            GameStateManager.Instance.playerEntity.AfterInteraction();
+            GameStateManager.Instance.playerEntity.AfterInteraction(entityToInteract.GridPosition);
         }
         else
             GameStateManager.Instance.playerEntity.RollForInteraction(entityToInteract);

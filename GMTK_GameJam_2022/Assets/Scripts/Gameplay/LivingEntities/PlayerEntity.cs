@@ -36,11 +36,15 @@ public class PlayerEntity : LivingEntity
         base.Awake();
     }
 
-    internal void AfterInteraction()
+    internal void AfterInteraction(Vector2Int targetPosition)
     {
         currentRoll = 0;
         StartMovement(false);
-        CheckForInteractions();
+        ClearInteractables();
+        Direction? targetDirection = (targetPosition - GridPosition).ToDirection();
+        animator.SetTrigger("Interact");
+        if (targetDirection.HasValue)
+            direction = targetDirection.Value;
     }
 
     public override void Init(CasinoGrid grid)
@@ -95,13 +99,14 @@ public class PlayerEntity : LivingEntity
     {
         if (collectedDice.Count == 0)
             AddDice(new List<Dice>() { diceType });
+        CheckInteractables(true);
     }
 
-    void CheckInteractables()
+    void CheckInteractables(bool startOfTurn = false)
     {
         ClearInteractables();
         gameUI.ClearInteractables();
-        if (currentRoll <= 0)
+        if (currentRoll <= 0 && !startOfTurn)
             return;
         Dictionary<Vector2Int, Entity>  foundInteractableEntities = GameStateManager.Instance.GetInteractableEntities(
             Grid.GetReachableNeighbors(GridPosition));
@@ -130,13 +135,17 @@ public class PlayerEntity : LivingEntity
                 return;
             }
             objectToInteract.Interact(this, RollDice());
-            currentRoll = 0;
-            StartMovement(false);
+            AfterInteraction(objectToInteract.GridPosition);
         }
         else if (GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.RollForDefense)
         {
             
         }
+    }
+
+    public void Attack(int rollToBeat)
+    {
+        
     }
 
     void ClearInteractables()
@@ -202,8 +211,7 @@ public class PlayerEntity : LivingEntity
                     else
                     {
                         interact.Interact(this, 0);
-                        currentRoll = 0;
-                        StartMovement(false);
+                        AfterInteraction(interact.GridPosition);
                     }
                     ClearInteractables();
                 }
