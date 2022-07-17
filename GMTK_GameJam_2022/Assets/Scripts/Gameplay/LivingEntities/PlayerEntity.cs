@@ -22,7 +22,7 @@ public class PlayerEntity : LivingEntity
 
     [SerializeField]
     int maxSelectableDice;
-
+    int enemyRollToBeat;
 
     [SerializeField]
     string levelTitle;
@@ -156,13 +156,24 @@ public class PlayerEntity : LivingEntity
         }
         else if (GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.RollForDefense)
         {
-            
+            int result = RollDice();
+            if(result <= enemyRollToBeat)
+            {
+                OnDeath();
+            }
         }
+    }
+
+    private void OnDeath()
+    {
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.GameOver;
+        Destroy(gameObject);
     }
 
     public void Attack(int rollToBeat)
     {
-        
+        enemyRollToBeat = rollToBeat;
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.RollForDefense;
     }
 
     void ClearInteractables()

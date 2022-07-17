@@ -88,6 +88,6 @@ public class DiceRoller : MonoBehaviour
         rotateAround1 = new Vector3(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)).normalized;
         rotateAround2 = new Vector3(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)).normalized;
         rollStartTime = Time.unscaledTime;
-        result = value;
+        result = Math.Clamp( value, 1, (int)diceType);
     }
 }

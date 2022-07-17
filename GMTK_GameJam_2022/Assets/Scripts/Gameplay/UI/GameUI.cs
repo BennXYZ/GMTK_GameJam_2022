@@ -32,6 +32,9 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     Animator levelInfoAnimator;
 
+    [SerializeField]
+    GameObject GameOverUI;
+
     private static bool staticHasRolledDice, staticHasHitRoll;
 
     public void EnableRollUi(bool canRoll)
@@ -115,12 +118,14 @@ public class GameUI : MonoBehaviour
         }
         chooseActionUi.SetActive(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.AskAction);
         entireUi.SetActive(GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.EnemyTurn 
-            && GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting);
+            && GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting
+            && GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.GameOver);
         endTurnButton.SetActive(GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting &&
             GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.EnemyTurn &&
             !GameStateManager.Instance.CanRoll);
         interactablesUiParent.gameObject.SetActive(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.AskAction ||
             GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.MidMovement);
+        GameOverUI.SetActive(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.GameOver);
     }
 
     public void ClearInteractables()
@@ -135,5 +140,10 @@ public class GameUI : MonoBehaviour
     {
         InteractableUiElement uiElement = Instantiate(interactablesUiPrefab, interactablesUiParent).GetComponent<InteractableUiElement>();
         uiElement.Init(entity);
+    }
+
+    public void RestartLevel()
+    {
+        GameStateManager.Instance.RestartLevel();
     }
 }

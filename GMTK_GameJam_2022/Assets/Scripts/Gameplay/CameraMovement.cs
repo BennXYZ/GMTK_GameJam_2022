@@ -20,14 +20,17 @@ namespace GMTKJam2022.Gameplay
 
         private void Update()
         {
-            Vector3 clampMin = new Vector3(Grid.Origin.x + 1.5f, 0, Grid.Origin.y + 1.5f);
-            Vector3 clampMax = new Vector3(Grid.Origin.x + Grid.Size.x - 1.5f, 0, Grid.Origin.y + Grid.Size.y - 1.5f);
+            if(Player != null)
+            {
+                Vector3 clampMin = new Vector3(Grid.Origin.x + 1.5f, 0, Grid.Origin.y + 1.5f);
+                Vector3 clampMax = new Vector3(Grid.Origin.x + Grid.Size.x - 1.5f, 0, Grid.Origin.y + Grid.Size.y - 1.5f);
 
-            transform.position = new Vector3(
-                Math.Clamp(Player.transform.position.x, clampMin.x, clampMax.x),
-                Math.Clamp(Player.transform.position.y, clampMin.y, clampMax.y),
-                Math.Clamp(Player.transform.position.z, clampMin.z, clampMax.z)
-                );
+                transform.position = new Vector3(
+                    Math.Clamp(Player.transform.position.x, clampMin.x, clampMax.x),
+                    Math.Clamp(Player.transform.position.y, clampMin.y, clampMax.y),
+                    Math.Clamp(Player.transform.position.z, clampMin.z, clampMax.z)
+                    );
+            }
         }
     }
 }

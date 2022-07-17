@@ -16,7 +16,8 @@ public class GameStateManager : MonoBehaviour
         RollForInteract,
         EnemyTurn,
         Waiting,
-        RollForDefense
+        RollForDefense,
+        GameOver
     }
 
     GameUI gameUi;
@@ -159,6 +160,11 @@ public class GameStateManager : MonoBehaviour
     public void RemoveFinishEventsListener(GameState state, UnityAction action)
     {
         stateFinishEvents[state].RemoveListener(action);
+    }
+
+    public void RestartLevel()
+    {
+        LoadCurrentLevel();
     }
 
     GameState currentGameState = GameState.Waiting;
