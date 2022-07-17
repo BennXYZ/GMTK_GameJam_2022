@@ -1001,7 +1001,7 @@ PrefabInstance:
     - target: {fileID: 3012483424947685456, guid: 56db77c29e2ff7240abaf07c31241698, type: 3}
       propertyPath: pathToFollow
       value: 
-      objectReference: {fileID: 419391169}
+      objectReference: {fileID: 0}
     - target: {fileID: 3012483424947685456, guid: 56db77c29e2ff7240abaf07c31241698, type: 3}
       propertyPath: pathStartNode
       value: 2

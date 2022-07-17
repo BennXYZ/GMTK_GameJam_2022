@@ -117,6 +117,11 @@ public class LivingEntity : Entity
         return GridPosition + direction.ToVector() == gridPosition;
     }
 
+    public bool LooksAwayFrom(Vector2Int gridPosition)
+    {
+        return (gridPosition - GridPosition).ToDirection().Mirror() == direction;
+    }
+
     public void MoveDownPath(List<Vector2Int> path = null)
     {
         if (animator)

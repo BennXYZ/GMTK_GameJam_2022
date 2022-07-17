@@ -34,28 +34,43 @@ public class EnemyEntity : LivingEntity
     public override void Init(CasinoGrid grid)
     {
         base.Init(grid);
-        nextPathTarget = pathStartNode % pathToFollow.Count;
+        nextPathTarget = pathToFollow != null ? pathStartNode % pathToFollow.Count : -1;
     }
 
     public void DoTurn(Action onTurnFinished)
     {
         turnFinishedAction = onTurnFinished;
         StartMovement(true);
-        MoveToGridPoint(followPlayer > 0 ? GameStateManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
+        if (nextPathTarget >= 0 || followPlayer > 0)
+            MoveToGridPoint(followPlayer > 0 ? GameStateManager.Instance.playerEntity.GridPosition : pathToFollow[nextPathTarget]);
+        else
+        {
+            if (CheckVisiblePlayer())
+                followPlayer = 4;
+            OnPathEndReached();
+        }
         followPlayer--;
     }
 
     public override void OnPathEndReached()
     {
         base.OnPathEndReached();
-        if (GetNearestGridPoint(transform.position) == pathToFollow[nextPathTarget])
+        if(nextPathTarget >= 0)
         {
-            nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;
-        }
-        if(currentRoll > 0)
-        {
-            StartMovement(false);
-            MoveToGridPoint(pathToFollow[nextPathTarget]);
+            if (GetNearestGridPoint(transform.position) == pathToFollow[nextPathTarget])
+            {
+                nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;
+            }
+            if (currentRoll > 0)
+            {
+                StartMovement(false);
+                MoveToGridPoint(pathToFollow[nextPathTarget]);
+            }
+            else
+            {
+                turnFinishedAction.Invoke();
+                turnFinishedAction = null;
+            }
         }
         else
         {
@@ -70,10 +85,11 @@ public class EnemyEntity : LivingEntity
             RollAndKeep();
 
         moveableTiles = Grid.FloodFill(GetNearestGridPoint(transform.position), 16, false);
-        while(!moveableTiles.Any(t => t.Key == pathToFollow[nextPathTarget]))
-        {
-            nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;
-        }
+        if (nextPathTarget >= 0)
+            while (!moveableTiles.Any(t => t.Key == pathToFollow[nextPathTarget]))
+            {
+                nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;
+            }
     }
 
     protected override void MoveToGridPoint(Vector2Int target)

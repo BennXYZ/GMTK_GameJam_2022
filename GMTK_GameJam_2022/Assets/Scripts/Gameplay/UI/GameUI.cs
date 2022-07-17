@@ -19,6 +19,9 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     GameObject chooseActionUi, entireUi, endTurnButton;
 
+    [SerializeField]
+    GameObject interactablesUiPrefab;
+
     public void EnableRollUi(bool canRoll)
     {
         rollUi.SetActive(canRoll);

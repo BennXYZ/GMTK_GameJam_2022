@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class CollectDiceInteraction : Interaction
 {
+    public override string InteractionTitle
+    {
+        get => "Collect Dice";
+    }
+
+    public override string InteractionTip
+    {
+        get => "You find dice lying around. Interact to collect them.";
+    }
+
     [SerializeField]
     List<Dice> diceToCollect;
 

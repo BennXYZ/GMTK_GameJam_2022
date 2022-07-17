@@ -8,6 +8,9 @@ public class Interaction : MonoBehaviour
     public bool usesDiceRoll;
     protected Entity entity;
 
+    public virtual string InteractionTitle { get; }
+    public virtual string InteractionTip { get; }
+
     public virtual bool Interact(LivingEntity interactor, int diceRoll)
     {
         return false;
