@@ -80,7 +80,7 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    int currentLevel = 0;
+    int currentLevel = 2;
 
     public int CurrentLevel
     {
