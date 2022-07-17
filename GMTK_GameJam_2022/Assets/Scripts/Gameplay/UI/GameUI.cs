@@ -22,13 +22,13 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     GameObject interactablesUiPrefab;
 
+    [SerializeField]
+    Transform interactablesUiParent;
+
     public void EnableRollUi(bool canRoll)
     {
         rollUi.SetActive(canRoll);
     }
-
-    [SerializeField]
-    UnityEvent onFinishTileSelection = new UnityEvent();
 
     public void TryAddDice()
     {
@@ -53,6 +53,7 @@ public class GameUI : MonoBehaviour
     {
         this.player = playerEntity;
         GameStateManager.Instance.AssignUI(this);
+        ClearInteractables();
         UpdateUI();
     }
 
@@ -91,5 +92,21 @@ public class GameUI : MonoBehaviour
         endTurnButton.SetActive(GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.Waiting &&
             GameStateManager.Instance.CurrentGameState != GameStateManager.GameState.EnemyTurn &&
             !GameStateManager.Instance.CanRoll);
+        interactablesUiParent.gameObject.SetActive(GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.AskAction ||
+            GameStateManager.Instance.CurrentGameState == GameStateManager.GameState.MidMovement);
+    }
+
+    public void ClearInteractables()
+    {
+        foreach (Transform child in interactablesUiParent)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void CreateInteractable(Entity entity)
+    {
+        InteractableUiElement uiElement = Instantiate(interactablesUiPrefab, interactablesUiParent).GetComponent<InteractableUiElement>();
+        uiElement.Init(entity);
     }
 }

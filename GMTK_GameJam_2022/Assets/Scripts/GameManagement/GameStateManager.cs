@@ -174,6 +174,10 @@ public class GameStateManager : MonoBehaviour
                 stateStartEvents[value].Invoke();
             }
             currentGameState = value;
+            if(CurrentGameState == GameState.AskAction)
+            {
+                playerEntity.CheckForInteractions();
+            }
             gameUi.UpdateUI();
         }
     }

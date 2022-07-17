@@ -87,6 +87,7 @@ public class PlayerEntity : LivingEntity
     void CheckInteractables()
     {
         ClearInteractables();
+        gameUI.ClearInteractables();
         if (currentRoll <= 0)
             return;
         Dictionary<Vector2Int, Entity>  foundInteractableEntities = GameStateManager.Instance.GetInteractableEntities(
@@ -94,8 +95,11 @@ public class PlayerEntity : LivingEntity
         foreach (var entity in foundInteractableEntities)
         {
             if (entity.Value.CanBeInteractedWith(this))
+            {
                 interactableEntities.Add(entity.Value, Instantiate(GameManager.Instance.interactableIndicatorPrefab,
                     entity.Value.transform.position, Quaternion.identity));
+                gameUI.CreateInteractable(entity.Value);
+            }
         }
     }
 
@@ -155,6 +159,19 @@ public class PlayerEntity : LivingEntity
         }
     }
 
+    public void CheckForInteractions()
+    {
+        CheckInteractables();
+    }
+
+    public void RollForInteraction(Entity entityToInteract)
+    {
+        objectToInteract = entityToInteract;
+        GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.RollForInteract;
+        ClearSpawnedTargetObjects();
+        ClearInteractables();
+    }
+
     protected override void MoveToGridPoint(Vector2Int target)
     {
         if (!moveableTiles.Any(m => m.Key.Equals(target)))
@@ -165,8 +182,7 @@ public class PlayerEntity : LivingEntity
                 Debug.Log("Interact!");
                 if (interact.InteractionNeedsDice)
                 {
-                    objectToInteract = interact;
-                    GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.RollForInteract;
+                    RollForInteraction(interact);
                 }
                 else
                 {

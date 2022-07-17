@@ -1442,21 +1442,8 @@ MonoBehaviour:
   chooseActionUi: {fileID: 6229620791981616744}
   entireUi: {fileID: 2721348111974809164}
   endTurnButton: {fileID: 6229620792592824212}
-  onFinishTileSelection:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6229620792592824210}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  interactablesUiPrefab: {fileID: 5101698435839668053, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
+  interactablesUiParent: {fileID: 2458656482391032074}
 --- !u!1 &6777686162793503092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,6 +2252,22 @@ PrefabInstance:
     - target: {fileID: 5101698435839668053, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
       propertyPath: m_Name
       value: Interaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623223242125489015, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623223242125489015, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623223242125489015, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6668607689521952470, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609ad3a7dd5c9944a9dfd3b864ff5e4e, type: 3}
