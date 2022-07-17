@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ConnectorDecal
+  m_Name: ConnectorOnDecal
   m_Shader: {fileID: -6465566751694194690, guid: 9da24e3e4b8080e4b9c6e74a803f07ff, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -99,7 +99,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Normal_Blend: 0.5
+    - Normal_Blend: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
