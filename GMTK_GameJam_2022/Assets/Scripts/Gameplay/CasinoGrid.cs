@@ -28,6 +28,9 @@ namespace GMTKJam2022.Gameplay
         [HideInInspector]
         public Vector2Int Size { get; private set; }
 
+        [field: SerializeField]
+        public Vector2Int Goal { get; set; }
+
         public Dictionary<Vector2Int, GridPathInformation> FloodFill(Vector2Int location, int distance, bool ignoreLivingEntities)
         {
             distance = Math.Max(0, distance);
@@ -125,7 +128,7 @@ namespace GMTKJam2022.Gameplay
             int maxDistance, bool ignoreLivingEntities)
         {
             GridTile? tile = GetTile(location);
-            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || (!ignoreLivingEntities && 
+            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || (!ignoreLivingEntities &&
                 LivingEntities.Any(l => !(l is PlayerEntity) && l.GetNearestGridPoint(l.transform.position) == location) && currentDistance > 0))
                 return;
 
@@ -143,7 +146,7 @@ namespace GMTKJam2022.Gameplay
                 else
                     return;
             }
-            else if(currentDistance > 0)
+            else if (currentDistance > 0)
                 closedList.TryAdd(location, new GridPathInformation(currentDistance, direction.Mirror()));
 
             if (currentDistance < maxDistance)
@@ -188,6 +191,14 @@ namespace GMTKJam2022.Gameplay
                     if ((tile.BlockedDirection & DirectionFlag.Left) == DirectionFlag.Left)
                         Gizmos.DrawWireCube(location + Vector3.left * 0.45f, new Vector3(0.1f, 1, 1));
                 }
+
+            {
+                GridTile? tile = GetTile(Goal);
+                float heightOffset = tile.HasValue ? tile.Value.HeightOffset * 0.5f : 0;
+                Vector3 goalLocation = new Vector3(Origin.x + Goal.x + 0.5f, heightOffset, Origin.y + Goal.y + 0.5f);
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireCube(goalLocation, Vector3.one * 0.4f);
+            }
         }
 
         private void Start()
