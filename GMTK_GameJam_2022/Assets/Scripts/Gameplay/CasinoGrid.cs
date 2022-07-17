@@ -126,7 +126,8 @@ namespace GMTKJam2022.Gameplay
         {
             GridTile? tile = GetTile(location);
             if (!tile.HasValue || tile.Value.Type == TileType.Blocked || (!ignoreLivingEntities &&
-                LivingEntities.Any(l => !(l is PlayerEntity) && l.GetNearestGridPoint(l.transform.position) == location) && currentDistance > 0))
+                GameStateManager.Instance.enemies.Any(l => !(l is PlayerEntity) && l.GetNearestGridPoint(l.transform.position) == location) 
+                && currentDistance > 0))
                 return;
 
             if (direction.HasValue)

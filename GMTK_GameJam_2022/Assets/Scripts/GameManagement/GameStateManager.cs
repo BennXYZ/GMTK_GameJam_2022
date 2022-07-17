@@ -21,9 +21,9 @@ public class GameStateManager : MonoBehaviour
 
     GameUI gameUi;
     public PlayerEntity playerEntity;
-    List<LivingEntity> livingEntities = new List<LivingEntity>();
-    List<EnemyEntity> enemies = new List<EnemyEntity>();
-    List<Entity> entities = new List<Entity>();
+    public List<LivingEntity> livingEntities = new List<LivingEntity>();
+    public List<EnemyEntity> enemies = new List<EnemyEntity>();
+    public List<Entity> entities = new List<Entity>();
 
     public void AssignEntity(Entity entity)
     {

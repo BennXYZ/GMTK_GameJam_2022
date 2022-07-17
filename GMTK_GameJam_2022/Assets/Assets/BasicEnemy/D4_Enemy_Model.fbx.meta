@@ -21,7 +21,12 @@ ModelImporter:
   - first:
       74: 2866913140291603414
     second: Armature|Walk Animation
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: bf4dc485ede85d64f81191e3fd9ad48c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
