@@ -24,6 +24,7 @@ public class CollectDiceInteraction : Interaction
         {
             player.AddDice(diceToCollect);
             diceToCollect.Clear();
+            onInteract.Invoke();
             return true;
         }
         return false;

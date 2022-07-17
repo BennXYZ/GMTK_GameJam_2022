@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Interaction : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class Interaction : MonoBehaviour
     public virtual string InteractionTitle { get; }
     public virtual string InteractionTip { get; }
 
+    [SerializeField]
+    protected UnityEvent onInteract;
+
     public virtual bool Interact(LivingEntity interactor, int diceRoll)
     {
+        onInteract.Invoke();
         return false;
         //Do Something
     }

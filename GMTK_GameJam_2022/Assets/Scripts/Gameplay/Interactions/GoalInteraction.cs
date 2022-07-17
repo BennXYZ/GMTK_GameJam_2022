@@ -22,6 +22,7 @@ namespace GMTKJam2022.Gameplay.Interactions
 
         public override bool Interact(LivingEntity interactor, int diceRoll)
         {
+            onInteract.Invoke();
             GameStateManager.Instance.CurrentLevel = levelId;
             return true;
         }

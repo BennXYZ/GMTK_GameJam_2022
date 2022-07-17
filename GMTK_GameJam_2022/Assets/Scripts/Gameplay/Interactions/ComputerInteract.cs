@@ -37,6 +37,7 @@ public class ComputerInteract : Interaction
             {
                 decal.material = disabledMaterial;
             }
+            onInteract.Invoke();
             return true;
         }
         else

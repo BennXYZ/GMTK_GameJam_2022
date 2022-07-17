@@ -24,6 +24,7 @@ public class EnemyInteraction : Interaction
     {
         (interactor as PlayerEntity).AddDice(new List<Dice> { (entity as EnemyEntity).DiceType });
         Destroy(gameObject);
+        onInteract.Invoke();
         return false;
     }
 }
