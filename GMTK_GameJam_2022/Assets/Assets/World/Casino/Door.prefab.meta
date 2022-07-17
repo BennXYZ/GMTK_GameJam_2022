@@ -1,7 +1,9 @@
 fileFormatVersion: 2
-guid: 62a9fb1a5529e7a44bb8d1ac87b62633
-folderAsset: yes
-DefaultImporter:
+guid: 9eef3fd61b2dc014a8b46f2b34c599f8
+labels:
+- Casino
+- World
+PrefabImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
