@@ -47,6 +47,7 @@ public class EnemyEntity : LivingEntity
 
     public override void OnPathEndReached()
     {
+        base.OnPathEndReached();
         if (GetNearestGridPoint(transform.position) == pathToFollow[nextPathTarget])
         {
             nextPathTarget = (nextPathTarget + 1) % pathToFollow.Count;

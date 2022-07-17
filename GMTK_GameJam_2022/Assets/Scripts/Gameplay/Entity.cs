@@ -46,6 +46,8 @@ public class Entity : MonoBehaviour
 
     public Vector2Int GetNearestGridPoint(Vector3 position)
     {
+        if (!Grid)
+            return Vector2Int.zero;
         Vector2Int targetPosition = new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.z));
         targetPosition.Clamp(Vector2Int.zero, Grid.Size - Vector2Int.one);
         return targetPosition;
