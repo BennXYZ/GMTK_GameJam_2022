@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class ComputerInteract : Interaction
 {
@@ -20,12 +21,22 @@ public class ComputerInteract : Interaction
     [SerializeField]
     LaserEntity laserWall;
 
+    [SerializeField]
+    List<DecalProjector> decals;
+
+    [SerializeField]
+    Material disabledMaterial;
+
     public override bool Interact(LivingEntity interactor, int diceRoll)
     {
         if(diceRoll > numberToBeat)
         {
             //OpenDoor
             laserWall.Open();
+            foreach(DecalProjector decal in decals)
+            {
+                decal.material = disabledMaterial;
+            }
             return true;
         }
         else
