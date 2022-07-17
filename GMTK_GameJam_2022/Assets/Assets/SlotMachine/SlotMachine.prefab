@@ -101,6 +101,8 @@ MonoBehaviour:
   usesDiceRoll: 1
   numberToBeat: 1
   laserWall: {fileID: 0}
+  decals: []
+  disabledMaterial: {fileID: 2100000, guid: b9ca22aecf94800478528d493f227b93, type: 2}
 --- !u!114 &2135807671
 MonoBehaviour:
   m_ObjectHideFlags: 0
