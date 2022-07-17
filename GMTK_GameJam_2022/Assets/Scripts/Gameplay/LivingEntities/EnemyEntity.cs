@@ -214,7 +214,7 @@ public class EnemyEntity : LivingEntity
         {
             diceRoll += base.RollDice();
         }
-        GameManager.Instance.SpawnDiceRoller(transform, diceType, diceRoll);
+        GameManager.Instance.SpawnDiceRoller(transform, diceType, diceRoll, Vector3.zero);
         return diceRoll;
     }
 }

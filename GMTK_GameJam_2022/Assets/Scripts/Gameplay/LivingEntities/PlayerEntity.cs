@@ -279,11 +279,13 @@ public class PlayerEntity : LivingEntity
         int currentRoll = 0;
         string debugText = currentRoll.ToString();
         int prevRoll = 0;
+        List<KeyValuePair<Dice, int>> result = new List<KeyValuePair<Dice, int>>();
         while(selectedDice.Count > 0)
         {
             prevRoll = currentRoll;
             CollectedDice selectedDie = selectedDice[0];
             currentRoll += selectedDie.diceType.RollDice();
+            result.Add(new KeyValuePair<Dice, int>(selectedDie.diceType, currentRoll - prevRoll));
             debugText += " + " + (currentRoll - prevRoll).ToString();
             collectedDice.Remove(selectedDie);
             selectedDice.Remove(selectedDie);
@@ -291,7 +293,23 @@ public class PlayerEntity : LivingEntity
         }
         Debug.Log($"PlayerRoll: {debugText} = {currentRoll}");
         currentRoll = Mathf.Max(currentRoll, 1);
-        GameManager.Instance.SpawnDiceRoller(transform, diceType, currentRoll);
+        if(result.Count == 0)
+        {
+            GameManager.Instance.SpawnDiceRoller(transform, diceType, currentRoll, Vector3.zero);
+        }
+        else if(result.Count == 1)
+        {
+            GameManager.Instance.SpawnDiceRoller(transform, result[0].Key, currentRoll, Vector3.zero);
+        }
+        else
+        {
+            for (int i = 0; i < result.Count; i++)
+            {
+                float norm = i / (float)result.Count;
+                Vector2 direction = new Vector2(Mathf.Cos(2*Mathf.PI * norm), Mathf.Sin(2 * Mathf.PI * norm)) * 0.5f;
+                GameManager.Instance.SpawnDiceRoller(transform, result[i].Key, result[i].Value, new Vector3(direction.x, 0, direction.y));
+            }
+        }
         return currentRoll;
     }
 }

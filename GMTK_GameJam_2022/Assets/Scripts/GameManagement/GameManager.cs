@@ -53,9 +53,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnDiceRoller(Transform position, Dice diceType, int result)
+    public void SpawnDiceRoller(Transform position, Dice diceType, int result, Vector3 offset)
     {
-        DiceRoller rollerInstance = Instantiate(diceRollerPrefab.gameObject, position.position + Vector3.up * 1.6f
+        DiceRoller rollerInstance = Instantiate(diceRollerPrefab.gameObject, position.position + Vector3.up * 1.6f + offset
             , Quaternion.identity, position).GetComponent<DiceRoller>();
         rollerInstance.Init(diceType, result);
     }
