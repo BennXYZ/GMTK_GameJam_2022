@@ -45,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 229038310c2e3b54ebc71a3b35f87d1e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7fc1613360548de45b83624228239f6f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -93,10 +93,10 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseStrength: 4.27
+    - _NoiseStrength: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _PrimarySmoothness: 0.1
+    - _PrimarySmoothness: 0.3
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -106,17 +106,17 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _TextSmoothness: 0.7
+    - _TextSmoothness: 0.2
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _PrimaryColor: {r: 1, g: 0.87981135, b: 0.7688679, a: 0}
-    - _SecondaryColor: {r: 1, g: 0.5773492, b: 0, a: 0}
+    - _PrimaryColor: {r: 1, g: 1, b: 1, a: 0}
+    - _SecondaryColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _TextColor: {r: 0, g: 0.6226415, b: 0.011506602, a: 0}
+    - _TextColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &534673478759257321
 MonoBehaviour:
