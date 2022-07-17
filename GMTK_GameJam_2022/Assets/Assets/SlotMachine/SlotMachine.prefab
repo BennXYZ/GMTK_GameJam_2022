@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6292793616704518271}
   - component: {fileID: 6988361634436331482}
   - component: {fileID: 5124905784703664912}
+  - component: {fileID: 2135807670}
+  - component: {fileID: 2135807671}
   m_Layer: 0
   m_Name: SlotMachine
   m_TagString: Untagged
@@ -25,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6638216621493379781}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &6988361634436331482
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84,3 +86,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2135807670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638216621493379781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2b2c9387727b34bb0c12e0839bff31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usesDiceRoll: 1
+  numberToBeat: 1
+  laserWall: {fileID: 0}
+--- !u!114 &2135807671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638216621493379781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c81315ff322ef04184a5e12e5144f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
