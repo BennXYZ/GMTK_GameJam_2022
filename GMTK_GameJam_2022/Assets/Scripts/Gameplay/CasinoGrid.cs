@@ -125,7 +125,7 @@ namespace GMTKJam2022.Gameplay
             int maxDistance, bool ignoreLivingEntities)
         {
             GridTile? tile = GetTile(location);
-            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || (!ignoreLivingEntities && 
+            if (!tile.HasValue || tile.Value.Type == TileType.Blocked || (!ignoreLivingEntities &&
                 LivingEntities.Any(l => !(l is PlayerEntity) && l.GetNearestGridPoint(l.transform.position) == location) && currentDistance > 0))
                 return;
 
@@ -143,7 +143,7 @@ namespace GMTKJam2022.Gameplay
                 else
                     return;
             }
-            else if(currentDistance > 0)
+            else if (currentDistance > 0)
                 closedList.TryAdd(location, new GridPathInformation(currentDistance, direction.Mirror()));
 
             if (currentDistance < maxDistance)

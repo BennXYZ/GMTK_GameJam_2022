@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 6508634f5ee3b5e48b21d7ac1f329f02
+guid: 87d177eb7eff6e6409fe7bb51092b4df
 labels:
-- World
+- Entity
 PrefabImporter:
   externalObjects: {}
   userData: 

@@ -59,7 +59,7 @@ public class GameStateManager : MonoBehaviour
     public void DoEnemyTurns()
     {
         CurrentGameState = GameState.EnemyTurn;
-        if(enemies.Count > 0)
+        if (enemies.Count > 0)
         {
             enemies[0].DoTurn(delegate { EnemyTurnFinished(1); });
         }
@@ -71,12 +71,12 @@ public class GameStateManager : MonoBehaviour
 
     void EnemyTurnFinished(int nextEnemyId)
     {
-        if(nextEnemyId < enemies.Count)
+        if (nextEnemyId < enemies.Count)
             enemies[nextEnemyId].DoTurn(delegate { EnemyTurnFinished(nextEnemyId + 1); });
         else
         {
             CurrentGameState = GameState.AskAction;
-        }    
+        }
     }
 
     int currentLevel = 0;
@@ -89,7 +89,7 @@ public class GameStateManager : MonoBehaviour
         }
         set
         {
-            if(currentLevel != value)
+            if (currentLevel != value)
             {
                 currentLevel = value;
                 LoadCurrentLevel();
@@ -100,9 +100,9 @@ public class GameStateManager : MonoBehaviour
     public Dictionary<Vector2Int, Entity> GetInteractableEntities(Dictionary<Vector2Int, GMTKJam2022.Gameplay.CasinoGrid.GridPathInformation> gridData)
     {
         Dictionary<Vector2Int, Entity> result = new Dictionary<Vector2Int, Entity>();
-        foreach(Entity entity in entities)
+        foreach (Entity entity in entities)
         {
-            if(entity.IsInteractable && gridData.Any(gd => gd.Key == entity.GridPosition))
+            if (entity.IsInteractable && gridData.Any(gd => gd.Key == entity.GridPosition))
             {
                 result.Add(entity.GridPosition, entity);
             }
@@ -122,7 +122,10 @@ public class GameStateManager : MonoBehaviour
         SceneManager.LoadScene(string.Format("Level{0:00}", currentLevel));
     }
 
-
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
     public static GameStateManager Instance { get => GameManager.Instance.gameStateManager; }
 
@@ -160,7 +163,8 @@ public class GameStateManager : MonoBehaviour
 
     GameState currentGameState = GameState.Waiting;
 
-    public GameState CurrentGameState { 
+    public GameState CurrentGameState
+    {
         get => currentGameState;
         set
         {
@@ -174,7 +178,8 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    public bool CanRoll {
+    public bool CanRoll
+    {
         get => CurrentGameState == GameState.RollForMovement || CurrentGameState == GameState.RollForInteract || CurrentGameState == GameState.RollForDefense;
     }
 }
