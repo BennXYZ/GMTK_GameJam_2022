@@ -63,6 +63,10 @@ public class GameStateManager : MonoBehaviour
         {
             enemies[0].DoTurn(delegate { EnemyTurnFinished(1); });
         }
+        else
+        {
+            CurrentGameState = GameState.AskAction;
+        }
     }
 
     void EnemyTurnFinished(int nextEnemyId)
