@@ -52,7 +52,7 @@ public class PlayerEntity : LivingEntity
 
     public bool CanSelectDice()
     {
-        return selectedDice.Count >= maxSelectableDice;
+        return selectedDice != null ? selectedDice.Count < maxSelectableDice : false;
     }
 
     public override void Init(CasinoGrid grid)
