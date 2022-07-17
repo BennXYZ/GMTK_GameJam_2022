@@ -73,6 +73,8 @@ public class PlayerEntity : LivingEntity
     void CheckInteractables()
     {
         ClearInteractables();
+        if (currentRoll <= 0)
+            return;
         Dictionary<Vector2Int, Entity>  foundInteractableEntities = GameStateManager.Instance.GetInteractableEntities(
             Grid.GetReachableNeighbors(GridPosition));
         foreach (var entity in foundInteractableEntities)
@@ -148,7 +150,10 @@ public class PlayerEntity : LivingEntity
             {
                 Debug.Log("Interact!");
                 if (interact.InteractionNeedsDice)
+                {
                     objectToInteract = interact;
+                    GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.RollForInteract;
+                }
                 else
                 {
                     interact.Interact(this, 0);
