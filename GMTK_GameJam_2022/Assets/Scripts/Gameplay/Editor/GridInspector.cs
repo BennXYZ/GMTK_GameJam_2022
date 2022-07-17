@@ -56,14 +56,6 @@ namespace GMTKJam2022.Gameplay.Editor
 
         public override void OnInspectorGUI()
         {
-            Vector2Int goal = EditorGUILayout.Vector2IntField("Goal", grid.Goal);
-            if (goal != grid.Goal)
-            {
-                Undo.RecordObject(grid, "Moved goal");
-                EditorUtility.SetDirty(grid);
-                grid.Goal = goal;
-            }
-
             Vector2Int origin = EditorGUILayout.Vector2IntField("Origin", grid.Origin);
             if (origin != grid.Origin)
             {
