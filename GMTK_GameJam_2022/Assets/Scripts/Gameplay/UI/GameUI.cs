@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class GameUI : MonoBehaviour
 {
@@ -24,6 +25,14 @@ public class GameUI : MonoBehaviour
 
     [SerializeField]
     Transform interactablesUiParent;
+
+    [SerializeField]
+    TMP_Text levelTitle, levelDescription;
+
+    [SerializeField]
+    Animator levelInfoAnimator;
+
+    private static bool staticHasRolledDice, staticHasHitRoll;
 
     public void EnableRollUi(bool canRoll)
     {
@@ -55,6 +64,14 @@ public class GameUI : MonoBehaviour
         GameStateManager.Instance.AssignUI(this);
         ClearInteractables();
         UpdateUI();
+        ShowLevelInfo(player.LevelTitle, player.LevelInfo);
+    }
+
+    public void ShowLevelInfo(string title, string info)
+    {
+        levelTitle.text = title;
+        levelDescription.text = info;
+        levelInfoAnimator.SetTrigger("Rollout");
     }
 
     public CollectedDice AddDice(Dice diceType, PlayerEntity player)
@@ -66,11 +83,21 @@ public class GameUI : MonoBehaviour
 
     public void OnMoveButton()
     {
+        if(!staticHasRolledDice)
+        {
+            ShowLevelInfo("Choose Dice", "Pick your dice in the bottom left corner and hit \"Roll\"");
+            staticHasRolledDice = true;
+        }
         GameStateManager.Instance.CurrentGameState = GameStateManager.GameState.RollForMovement;
     }
 
     public void RollSelectedDice()
     {
+        if (!staticHasHitRoll)
+        {
+            ShowLevelInfo("Move", "Your roll dictates how much you can move. The red tiles show where you can move");
+            staticHasRolledDice = true;
+        }
         player.OnRollDice();
     }
 

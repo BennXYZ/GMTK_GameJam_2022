@@ -23,6 +23,12 @@ public class PlayerEntity : LivingEntity
     [SerializeField]
     int maxSelectableDice;
 
+
+    [SerializeField]
+    string levelTitle;
+    [SerializeField, TextArea]
+    string levelInfo;
+
     [SerializeField]
     CameraMovement cameraPrefab;
 
@@ -31,6 +37,9 @@ public class PlayerEntity : LivingEntity
 
     [SerializeField]
     EventSystem eventSystem;
+
+    public string LevelTitle { get => levelTitle; }
+    public string LevelInfo { get => levelInfo; }
 
     protected override void Awake()
     {
