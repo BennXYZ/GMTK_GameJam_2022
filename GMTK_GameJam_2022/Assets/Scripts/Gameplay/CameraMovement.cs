@@ -12,6 +12,12 @@ namespace GMTKJam2022.Gameplay
         public CasinoGrid Grid { get; set; }
         public PlayerEntity Player { get; set; }
 
+        public void Init(CasinoGrid grid, PlayerEntity player)
+        {
+            Grid = grid;
+            Player = player;
+        }
+
         private void Update()
         {
             Vector3 clampMin = new Vector3(Grid.Origin.x + 1.5f, 0, Grid.Origin.y + 1.5f);

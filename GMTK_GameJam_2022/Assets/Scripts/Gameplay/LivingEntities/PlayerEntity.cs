@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerEntity : LivingEntity
 {
@@ -19,6 +20,15 @@ public class PlayerEntity : LivingEntity
     Dictionary<Entity, GameObject> interactableEntities = new Dictionary<Entity, GameObject>();
     Entity objectToInteract;
 
+    [SerializeField]
+    CameraMovement cameraPrefab;
+
+    [SerializeField]
+    Canvas canvasPrefabPrefab;
+
+    [SerializeField]
+    EventSystem eventSystem;
+
     protected override void Awake()
     {
         selectedDice = new List<CollectedDice>();
@@ -29,9 +39,12 @@ public class PlayerEntity : LivingEntity
     public override void Init(CasinoGrid grid)
     {
         base.Init(grid);
-        gameUI = FindObjectOfType<GameUI>();
-        gameUI.Init(this);
         GameStateManager.Instance.AssignEntity(this);
+        CameraMovement obj = Instantiate(cameraPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<CameraMovement>();
+        obj.Init(Grid, this);
+        gameUI = Instantiate(canvasPrefabPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<GameUI>();
+        Instantiate(eventSystem.gameObject, Vector3.zero, Quaternion.identity);
+        gameUI.Init(this);
     }
 
     protected override void Attack(LivingEntity target)
