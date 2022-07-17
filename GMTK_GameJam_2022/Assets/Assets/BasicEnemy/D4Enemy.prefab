@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e8f4d2e3f761d4ca9ee24764a69853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceType: 6
+  diceType: 4
   direction: 0
   animator: {fileID: 1019466127424454755}
   movementSpeed: 3

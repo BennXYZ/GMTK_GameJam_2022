@@ -60,6 +60,7 @@ MonoBehaviour:
   movementSpeed: 3
   rotationSpeed: 1000
   debugAttackTarget: {fileID: 0}
+  maxSelectableDice: 3
   cameraPrefab: {fileID: 5955733535676335341, guid: de0c219ee37bb1a43a90f983c9f4f37e, type: 3}
   canvasPrefabPrefab: {fileID: 6229620793141473034, guid: 4edbdabb322b44449aa31850b30638fc, type: 3}
   eventSystem: {fileID: 8095066366616778092, guid: f5bcf07b878fd93429b20e398fb9618d, type: 3}
