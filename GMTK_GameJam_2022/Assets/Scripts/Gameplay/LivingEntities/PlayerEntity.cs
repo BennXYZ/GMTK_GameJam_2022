@@ -290,6 +290,8 @@ public class PlayerEntity : LivingEntity
             Destroy(selectedDie.gameObject);
         }
         Debug.Log($"PlayerRoll: {debugText} = {currentRoll}");
-        return Mathf.Max(currentRoll,1);
+        currentRoll = Mathf.Max(currentRoll, 1);
+        GameManager.Instance.SpawnDiceRoller(transform, diceType, currentRoll);
+        return currentRoll;
     }
 }

@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject interactableIndicatorPrefab;
 
+    public DiceRoller diceRollerPrefab;
+
     static GameManager instance;
     public static GameManager Instance { get => instance; }
 
@@ -49,5 +51,12 @@ public class GameManager : MonoBehaviour
         {
             //Start From Main Menu
         }
+    }
+
+    public void SpawnDiceRoller(Transform position, Dice diceType, int result)
+    {
+        DiceRoller rollerInstance = Instantiate(diceRollerPrefab.gameObject, position.position + Vector3.up * 1.6f
+            , Quaternion.identity, position).GetComponent<DiceRoller>();
+        rollerInstance.Init(diceType, result);
     }
 }

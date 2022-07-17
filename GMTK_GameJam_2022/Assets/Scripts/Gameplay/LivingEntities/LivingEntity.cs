@@ -222,6 +222,7 @@ public class LivingEntity : Entity
 
     public virtual int RollDice()
     {
-        return diceType.RollDice();
+        int result = diceType.RollDice();
+        return result;
     }
 }

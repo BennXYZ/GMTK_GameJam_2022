@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7540793919619766464}
   - component: {fileID: 806280493075759156}
   - component: {fileID: 4980463855784582114}
+  - component: {fileID: 3735257843678741794}
   m_Layer: 0
   m_Name: D10
   m_TagString: Untagged
@@ -25,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2554143489671921145}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.5973464, y: 0.7701114, z: -0.1942781, w: -0.11118375}
   m_LocalPosition: {x: 1.5000296, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.598, y: 896.131, z: -76.478}
 --- !u!33 &806280493075759156
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -83,3 +84,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3735257843678741794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554143489671921145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7eb879993ea3de4ea3854802f99526e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  values:
+  - {x: -0.01384196, y: 0.29750928, z: 0.9545962, w: 0.0065480797}
+  - {x: -0.91002375, y: -0.32769498, z: 0.09278606, w: -0.23635462}
+  - {x: -0.23382296, y: 0.12462384, z: 0.34177074, w: 0.9016588}
+  - {x: 0.5650416, y: 0.80084187, z: -0.16363463, w: 0.112267755}
+  - {x: 0.082384184, y: 0.13266061, z: 0.787723, w: -0.59590816}
+  - {x: 0.9422649, y: -0.2691241, z: 0.044770755, w: 0.19417694}
+  - {x: 0.16456488, y: 0.07996842, z: 0.2999491, w: -0.93624467}
+  - {x: 0.021861501, y: -0.96177167, z: 0.2713219, w: -0.030031228}
+  - {x: 0.0933408, y: -0.16256468, z: -0.826117, w: -0.53140473}
+  - {x: -0.60651416, y: 0.7629121, z: -0.19559397, w: -0.10885223}

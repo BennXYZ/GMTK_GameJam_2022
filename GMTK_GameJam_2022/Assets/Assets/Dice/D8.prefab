@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4374445955442493839}
   - component: {fileID: 4492974717522701540}
   - component: {fileID: 6559601005797933182}
+  - component: {fileID: 3914375468967418022}
   m_Layer: 0
   m_Name: D8
   m_TagString: Untagged
@@ -25,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4017886122529739059}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: 0.030443506, y: 0.24510108, z: 0.9687782, w: -0.021623323}
   m_LocalPosition: {x: -0.5000105, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -28.438, y: 1083.154, z: -178.242}
 --- !u!33 &4492974717522701540
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -83,3 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3914375468967418022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4017886122529739059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7eb879993ea3de4ea3854802f99526e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  values:
+  - {x: -0.04596453, y: 0.9662055, z: -0.2531119, w: -0.016392738}
+  - {x: 0.20905362, y: -0.01501049, z: -0.010235801, w: -0.97773546}
+  - {x: 0.14701593, y: -0.18508698, z: -0.7007633, w: -0.6730973}
+  - {x: -0.70385647, y: -0.67859316, z: 0.17405939, w: -0.11747661}
+  - {x: -0.1590849, y: -0.16956812, z: -0.6439268, w: 0.72890127}
+  - {x: -0.6732394, y: 0.71103835, z: -0.14091505, w: -0.14600053}
+  - {x: -0.9876959, y: -0.017780801, z: 0.017840434, w: -0.15434524}
+  - {x: 0.031461004, y: 0.2920164, z: 0.95568407, w: -0.020114189}

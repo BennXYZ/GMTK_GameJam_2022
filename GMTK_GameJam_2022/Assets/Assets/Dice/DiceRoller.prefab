@@ -1,0 +1,189 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1031677537916619325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031677537916619326}
+  - component: {fileID: 1031677537916619327}
+  m_Layer: 0
+  m_Name: DiceRoller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1031677537916619326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031677537916619325}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.849, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1031677537916619327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031677537916619325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c2adc578775b247bcb8f440e897978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceVariants:
+  - RollableDice: {fileID: -650467117773903104, guid: 031fd9e51c96957409db295b3ae6e5eb, type: 3}
+    DiceType: 4
+  - RollableDice: {fileID: 4808001544047385438, guid: b6dbdf8659dfaa14d8a064191d2f25f5, type: 3}
+    DiceType: 6
+  - RollableDice: {fileID: 3914375468967418022, guid: f9d804686a799324ea8971cbdc191347, type: 3}
+    DiceType: 8
+  - RollableDice: {fileID: 3735257843678741794, guid: 6f1894736f6e8df47a2a87ef4593a674, type: 3}
+    DiceType: 10
+  - RollableDice: {fileID: 2421894138280686602, guid: 7374cb865cac4a243b5c5522f35f3f9b, type: 3}
+    DiceType: 12
+  timeToRoll: 1
+  rotationSpeed: 100
+  debugDice: 8
+  debugResult: 4
+  rollDebug: 0
+  liveTime: 3
+  scaleCurveX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.63814086
+      value: 1
+      inSlope: 0.002738968
+      outSlope: 0.002738968
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3690476
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9747951
+      value: -0.02859117
+      inSlope: -3.055334
+      outSlope: -3.055334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  scaleCurveY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -2.809691
+      outSlope: -2.809691
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.1371645
+      value: 0.61461014
+      inSlope: -0.4474817
+      outSlope: -0.4474817
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.4054653
+      value: 1.1283331
+      inSlope: 0.0015667866
+      outSlope: 0.0015667866
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.30437583
+    - serializedVersion: 3
+      time: 0.5053196
+      value: 0.9168084
+      inSlope: 0.02719091
+      outSlope: 0.02719091
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.62021047
+      value: 0.994849
+      inSlope: -0.0002513967
+      outSlope: -0.0002513967
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.972719
+      value: -0.018456385
+      inSlope: -0.22556081
+      outSlope: -0.22556081
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.14228293
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  scaleCurveZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.011244467
+      outSlope: -0.011244467
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.63779193
+      value: 0.99282837
+      inSlope: -0.0014147762
+      outSlope: -0.0014147762
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23529407
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9792175
+      value: -0.06687927
+      inSlope: -3.1037734
+      outSlope: -3.1037734
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

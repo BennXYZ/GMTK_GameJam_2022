@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4367474244288138623}
   - component: {fileID: 8679078355749182636}
   - component: {fileID: 3378512436200211223}
+  - component: {fileID: 5149423466593683869}
   m_Layer: 0
   m_Name: D20
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5149423466593683869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927112096386693827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7eb879993ea3de4ea3854802f99526e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  values: []

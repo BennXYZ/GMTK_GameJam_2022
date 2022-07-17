@@ -149,7 +149,7 @@ public class EnemyEntity : LivingEntity
                         currentPath.Clear();
                         currentRoll = 0;
                         OnPathEndReached();
-                        Attack(GameStateManager.Instance.playerEntity);
+                        GameStateManager.Instance.playerEntity.Attack(RollDice());
                     }
                     else
                     {
@@ -214,6 +214,7 @@ public class EnemyEntity : LivingEntity
         {
             diceRoll += base.RollDice();
         }
+        GameManager.Instance.SpawnDiceRoller(transform, diceType, diceRoll);
         return diceRoll;
     }
 }
