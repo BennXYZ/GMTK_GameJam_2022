@@ -99,7 +99,7 @@ public class GameUI : MonoBehaviour
         if (!staticHasHitRoll)
         {
             ShowLevelInfo("Move", "Your roll dictates how much you can move. The red tiles show where you can move");
-            staticHasRolledDice = true;
+            staticHasHitRoll = true;
         }
         player.OnRollDice();
     }
